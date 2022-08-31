@@ -1,0 +1,6 @@
+package com.example.train_venturo
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
