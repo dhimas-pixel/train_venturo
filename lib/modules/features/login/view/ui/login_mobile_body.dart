@@ -41,7 +41,7 @@ class LoginMobileBody extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const PrimaryTextStyle(
-                              size: 22,
+                              size: 20,
                               content: 'Masuk untuk melanjutkan!',
                               fontWeight: FontWeight.w500,
                             ),

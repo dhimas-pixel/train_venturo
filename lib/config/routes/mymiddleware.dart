@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
-import 'package:train_venturo/modules/features/home/view/ui/home_view.dart';
 import 'package:train_venturo/modules/features/login/view/ui/login_view.dart';
 
+import '../../modules/features/home/ui/home_view.dart';
 import '../../modules/features/location/view/ui/location_view.dart';
 
 appRoutes() => [

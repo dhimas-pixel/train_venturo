@@ -24,7 +24,7 @@ class PrimaryTextStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: size,
         color: color,
-        fontFamily: 'Poppins',
+        fontFamily: 'Montserrat',
         fontWeight: fontWeight,
       ),
     );
