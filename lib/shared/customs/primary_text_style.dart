@@ -6,18 +6,21 @@ class PrimaryTextStyle extends StatelessWidget {
   final String content;
   final FontWeight fontWeight;
   final Color color;
+  final TextAlign textAlign;
   const PrimaryTextStyle({
     Key? key,
     required this.size,
     required this.content,
     this.fontWeight = FontWeight.normal,
     this.color = kBlackPrimaryColor,
+    this.textAlign = TextAlign.start,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       content,
+      textAlign: textAlign,
       style: TextStyle(
         fontSize: size,
         color: color,
