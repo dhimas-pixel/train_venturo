@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:train_venturo/config/themes/color.dart';
 
+import '../../constant/core/assets_const/assets_const.dart';
+
 class PrimaryTextStyle extends StatelessWidget {
   final double size;
   final String content;
@@ -24,7 +26,7 @@ class PrimaryTextStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: size,
         color: color,
-        fontFamily: 'Montserrat',
+        fontFamily: AssetsUrl.fontMont,
         fontWeight: fontWeight,
       ),
     );

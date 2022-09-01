@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:train_venturo/config/themes/color.dart';
+import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
@@ -15,7 +16,7 @@ class CardPromo extends StatelessWidget {
       height: 158,
       decoration: BoxDecoration(
         image: const DecorationImage(
-          image: AssetImage('assets/images/bg_promo.png'),
+          image: AssetImage('${AssetsUrl.imgUrl}bg_promo.png'),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(10),
@@ -28,17 +29,17 @@ class CardPromo extends StatelessWidget {
             children: [
               const PrimaryTextStyle(
                 size: 20,
-                content: "Diskon",
+                content: "Voucher",
                 color: kWhiteColor,
                 fontWeight: FontWeight.w600,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  "10 %",
+                  "Rp 800.000",
                   style: TextStyle(
-                    fontSize: 35,
-                    fontFamily: "Montserrat",
+                    fontSize: 22,
+                    fontFamily: AssetsUrl.fontMont,
                     fontWeight: FontWeight.bold,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
