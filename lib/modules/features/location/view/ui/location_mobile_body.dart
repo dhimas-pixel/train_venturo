@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
-import 'package:train_venturo/modules/features/location/view/components/background.dart';
+import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
+import 'package:train_venturo/shared/customs/background.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
+import 'package:train_venturo/shared/widgets/bounce_animation.dart';
 
 import '../../../../../shared/widgets/fade_animation.dart';
 import '../../../../../shared/widgets/scale_animation.dart';
@@ -35,10 +37,13 @@ class LocationMobileBody extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   children: [
                     FadeAnimation(
-                      child: Image.asset("assets/images/img_map.png"),
+                      child: Image.asset("${AssetsUrl.imgUrl}img_map.png"),
                     ),
                     ScaleAnimations(
-                      child: SvgPicture.asset("assets/svg/ic_map.svg"),
+                      child: BounceAnimation(
+                        child:
+                            SvgPicture.asset("${AssetsUrl.svgUrl}ic_map.svg"),
+                      ),
                     ),
                   ],
                 ),

@@ -21,7 +21,7 @@ appRoutes() => [
       GetPage(
         name: AppRoutes.homeView,
         page: () => const HomeView(),
-        transition: Transition.leftToRightWithFade,
+        transition: Transition.downToUp,
         transitionDuration: const Duration(milliseconds: 500),
       ),
     ];
