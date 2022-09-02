@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 
-import 'config/routes/mymiddleware.dart';
+import 'config/routes/name_pages.dart';
 
 void main() {
   runApp(const MyApp());
