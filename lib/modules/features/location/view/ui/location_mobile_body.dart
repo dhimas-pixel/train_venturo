@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
 import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
@@ -41,13 +40,6 @@ class _LocationMobileBodyState extends State<LocationMobileBody> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const FadeAnimation(
-                //   child: PrimaryTextStyle(
-                //     size: 22,
-                //     content: "Mencari Lokasimu ...",
-                //     color: kGreyColor,
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Stack(

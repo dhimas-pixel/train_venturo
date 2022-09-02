@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import '../../../../../config/themes/color.dart';
 
 class EmailTextField extends StatelessWidget {
+  final TextEditingController controller;
   const EmailTextField({
     Key? key,
+    required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const TextField(
+    return TextField(
+      controller: controller,
       cursorColor: kPrimaryColor,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Alamat Email",
         labelStyle: TextStyle(
           color: kBlackPrimaryColor,

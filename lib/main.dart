@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 
 import 'config/routes/name_pages.dart';
@@ -13,10 +14,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.loginView,
-      getPages: appRoutes(),
+    return OverlaySupport.global(
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.loginView,
+        getPages: appRoutes(),
+      ),
     );
   }
 }

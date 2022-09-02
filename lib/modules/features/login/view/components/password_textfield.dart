@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../../config/themes/color.dart';
 
 class PassTextField extends StatefulWidget {
+  final TextEditingController controller;
   const PassTextField({
     Key? key,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -16,6 +18,7 @@ class _PassTextFieldState extends State<PassTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.controller,
       cursorColor: kPrimaryColor,
       obscureText: _isObscure,
       decoration: InputDecoration(

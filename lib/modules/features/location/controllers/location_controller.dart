@@ -2,7 +2,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
-// import '../../../../config/routes/name_routes.dart';
+import '../../../../config/routes/name_routes.dart';
 
 class LocationController extends GetxController with StateMixin {
   List<Placemark> _placemarks = [];
@@ -19,7 +19,9 @@ class LocationController extends GetxController with StateMixin {
       result.longitude,
     );
     change(null, status: RxStatus.success());
-    // Get.offAllNamed(AppRoutes.homeView);
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.offAllNamed(AppRoutes.homeView);
+    });
   }
 
   Future<bool> _handleLocationPermission() async {
