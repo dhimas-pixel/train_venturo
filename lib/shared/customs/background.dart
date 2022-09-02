@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:train_venturo/constant/common/media_query.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
@@ -9,9 +10,8 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SizedBox(
-      height: size.height,
+      height: heightSized(context),
       width: double.infinity,
       child: Stack(
         alignment: Alignment.center,
@@ -22,7 +22,10 @@ class Background extends StatelessWidget {
               scale: 1.1,
             ),
           ),
-          child,
+          Positioned(
+            top: 100,
+            child: child,
+          ),
         ],
       ),
     );
