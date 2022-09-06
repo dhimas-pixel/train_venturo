@@ -155,7 +155,32 @@ class _LoginMobileBodyState extends State<LoginMobileBody> {
                             SignUpButton(
                               text1: "Masuk menggunakan ",
                               text2: "Google",
-                              press: () {},
+                              press: () async {
+                                loadData(context);
+                                final getRespon =
+                                    await loginController.loginGoogle();
+
+                                if (getRespon!.statusCode == 422) {
+                                  snackBarCustom(
+                                    "Password yang anda masukkan salah!",
+                                    Icons.error_sharp,
+                                    kRedColor,
+                                  );
+                                } else if (getRespon.statusCode == 204) {
+                                  snackBarCustom(
+                                    "User tidak ditemukan.",
+                                    Icons.error_sharp,
+                                    kRedColor,
+                                  );
+                                } else {
+                                  snackBarCustom(
+                                    "Berhasil Login",
+                                    Icons.done_outline_rounded,
+                                    kSecondaryColor,
+                                  );
+                                }
+                                Navigator.of(context).pop();
+                              },
                               color: kWhiteColor,
                               width: double.infinity,
                               fontSize: 14,
@@ -165,7 +190,18 @@ class _LoginMobileBodyState extends State<LoginMobileBody> {
                             SignUpButton(
                               text1: "Masuk menggunakan ",
                               text2: "Apple",
-                              press: () {},
+                              press: () {
+                                Get.defaultDialog(
+                                  title: "Perhatian",
+                                  middleText: "Fitur belum tersedia",
+                                  onCancel: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  cancelTextColor: kRedColor,
+                                  buttonColor: kRedColor,
+                                  textCancel: "Kembali",
+                                );
+                              },
                               color: kBlackPrimaryColor,
                               width: double.infinity,
                               fontSize: 14,
