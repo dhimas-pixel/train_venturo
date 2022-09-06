@@ -9,11 +9,9 @@ class ManuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: ResponsiveLayout(
-        mobileBody: MenuMobileBody(),
-        tabletBody: MenuTabletBody(),
-      ),
+    return const ResponsiveLayout(
+      mobileBody: MenuMobileBody(),
+      tabletBody: MenuTabletBody(),
     );
   }
 }

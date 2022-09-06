@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:train_venturo/config/themes/color.dart';
+import 'package:train_venturo/modules/features/profile/ui/profile_view.dart';
 
+import '../../login/controllers/login_controller.dart';
 import '../../menu/view/ui/menu_view.dart';
 import '../components/app_bar_home.dart';
 import '../components/icon_navbar_home.dart';
@@ -13,19 +16,14 @@ class HomeMobileBody extends StatefulWidget {
 }
 
 class _HomeMobileBodyState extends State<HomeMobileBody> {
+  final loginController = Get.find<LoginController>();
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     ManuView(),
     Text(
       'Index 1: Business',
-      style: optionStyle,
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    ProfileView(),
   ];
 
   void _onItemTapped(int index) {

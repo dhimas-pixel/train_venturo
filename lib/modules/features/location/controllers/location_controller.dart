@@ -11,14 +11,18 @@ class LocationController extends GetxController with StateMixin {
   Future<void> getlocation() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
+
     change(null, status: RxStatus.loading());
+
     final Position result = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     _placemarks = await placemarkFromCoordinates(
       result.latitude,
       result.longitude,
     );
+
     change(null, status: RxStatus.success());
+
     Future.delayed(const Duration(seconds: 2), () {
       Get.offAllNamed(AppRoutes.homeView);
     });

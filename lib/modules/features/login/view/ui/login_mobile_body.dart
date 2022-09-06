@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
 import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
@@ -23,11 +22,11 @@ class LoginMobileBody extends StatefulWidget {
 }
 
 class _LoginMobileBodyState extends State<LoginMobileBody> {
-  final getState = Get.put(LoginController());
+  final loginController = Get.find<LoginController>();
   final _formKey = GlobalKey<FormState>();
 
-  final _conEmail = TextEditingController();
-  final _conPassword = TextEditingController();
+  final TextEditingController _conEmail = TextEditingController();
+  final TextEditingController _conPassword = TextEditingController();
 
   @override
   void dispose() {
@@ -81,7 +80,6 @@ class _LoginMobileBodyState extends State<LoginMobileBody> {
                                 PrimaryButton(
                                   text: "Masuk",
                                   press: () async {
-                                    // Get.toNamed(AppRoutes.locationView);
                                     final getEmail = _conEmail.text;
                                     final getPass = _conPassword.text;
                                     if (getEmail.isEmpty && getPass.isEmpty) {
@@ -90,7 +88,7 @@ class _LoginMobileBodyState extends State<LoginMobileBody> {
                                         Icons.error_sharp,
                                         kRedColor,
                                       );
-                                    } else if (!validateEmail(getEmail)) {
+                                    } else if (!GetUtils.isEmail(getEmail)) {
                                       snackBarCustom(
                                         "Alamat email tidak valid!",
                                         Icons.error_sharp,
@@ -98,13 +96,14 @@ class _LoginMobileBodyState extends State<LoginMobileBody> {
                                       );
                                     } else {
                                       loadData(context);
-                                      final getRespon = await getState.loginApi(
+                                      final getRespon =
+                                          await loginController.loginApi(
                                         LoginApiReqModel(
                                           email: getEmail,
                                           password: getPass,
                                         ),
                                       );
-                                      Navigator.of(context).pop();
+
                                       if (getRespon!.statusCode == 422) {
                                         snackBarCustom(
                                           "Password yang anda masukkan salah!",
@@ -119,15 +118,13 @@ class _LoginMobileBodyState extends State<LoginMobileBody> {
                                         );
                                       } else {
                                         snackBarCustom(
-                                          getRespon.data!.token.toString(),
+                                          "Berhasil Login",
                                           Icons.done_outline_rounded,
-                                          kPrimaryColor,
+                                          kSecondaryColor,
                                         );
-                                        Get.offAllNamed(AppRoutes.locationView);
                                       }
+                                      Navigator.of(context).pop();
                                     }
-                                    // print(_conEmail.text);
-                                    // print(_conPassword.text);
                                   },
                                   color: kSecondaryColor,
                                   textColor: kWhiteColor,
