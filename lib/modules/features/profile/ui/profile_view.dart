@@ -11,17 +11,24 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginController = Get.find<LoginController>();
     return Center(
-      child: PrimaryButton(
-        text: 'Logout',
-        press: () {
-          Get.find<LoginController>().logOut();
-          RestartWidget.restartApp(context);
-        },
-        color: kRedColor,
-        width: double.infinity,
-        fontSize: 16,
-        textColor: kWhiteColor,
+      child: Column(
+        children: [
+          Text(loginController.googleAccount.value?.displayName ?? ""),
+          Text(loginController.googleAccount.value?.email ?? ""),
+          PrimaryButton(
+            text: 'Logout',
+            press: () {
+              Get.find<LoginController>().logOut();
+              RestartWidget.restartApp(context);
+            },
+            color: kRedColor,
+            width: double.infinity,
+            fontSize: 16,
+            textColor: kWhiteColor,
+          ),
+        ],
       ),
     );
   }
