@@ -25,11 +25,9 @@ class _ConnectionViewState extends State<ConnectionView> {
   @override
   initState() {
     super.initState();
-    // print(_connectivityResult);
     _connectivitySubscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
-      // print('Current connectivity status: $result');
       setState(() {
         _connectivityResult = result;
       });
@@ -41,20 +39,6 @@ class _ConnectionViewState extends State<ConnectionView> {
     super.dispose();
     _connectivitySubscription.cancel();
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   // Connectivity()
-  //   //     .onConnectivityChanged
-  //   //     .listen((ConnectivityResult result) async {
-  //   //   if (result != ConnectivityResult.none) {
-  //   //     hasInternet = await InternetConnectionChecker().hasConnection;
-  //   //   }
-  //   // });
-
-  // }
 
   @override
   Widget build(BuildContext context) {
