@@ -5,15 +5,22 @@ import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
 class CardPromo extends StatelessWidget {
+  final String type, name, nominal;
+  final double width, height;
   const CardPromo({
     Key? key,
+    required this.type,
+    required this.name,
+    required this.nominal,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 282,
-      height: 158,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage('${AssetsUrl.imgUrl}bg_promo.png'),
@@ -27,16 +34,16 @@ class CardPromo extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const PrimaryTextStyle(
+              PrimaryTextStyle(
                 size: 20,
-                content: "Voucher",
+                content: type,
                 color: kWhiteColor,
                 fontWeight: FontWeight.w600,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  "Rp 800.000",
+                  nominal,
                   style: TextStyle(
                     fontSize: 22,
                     fontFamily: AssetsUrl.fontMont,
@@ -50,11 +57,11 @@ class CardPromo extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
+          SizedBox(
             width: 150,
             child: PrimaryTextStyle(
               size: 14,
-              content: "Mengisi review yang ditentukan",
+              content: name,
               color: kWhiteColor,
               textAlign: TextAlign.center,
             ),
