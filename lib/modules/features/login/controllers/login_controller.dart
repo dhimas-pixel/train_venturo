@@ -6,8 +6,9 @@ import 'package:train_venturo/modules/features/login/repository/login_service.da
 import 'package:train_venturo/modules/models/login_model/login_api_request_model.dart';
 import 'package:train_venturo/modules/models/login_model/login_google_request_model.dart';
 import 'package:train_venturo/modules/models/login_model/login_response_model.dart';
+import 'package:train_venturo/utils/functions/cache_manager.dart';
 
-class LoginController extends GetxController with CacheManager {
+class LoginController extends GetxController {
   LoginService loginService = LoginService();
 
   final _googleSignin = GoogleSignIn();
@@ -25,7 +26,7 @@ class LoginController extends GetxController with CacheManager {
           email: googleAccount.value!.email));
       if (response!.data != null) {
         isLogged.value = true;
-        await saveToken(response.data!.token);
+        await CacheManager.saveToken(response.data!.token);
       }
       return response;
     } on DioError catch (e) {
@@ -33,18 +34,12 @@ class LoginController extends GetxController with CacheManager {
     }
   }
 
-  // loginGoogle() async {
-  //   googleAccount.value = await _googleSignin.signIn();
-  //   print(googleAccount.value!.displayName);
-  //   // print(googleAccount.value!.email);
-  // }
-
   Future<LoginResModel?> loginApi(LoginApiReqModel getModel) async {
     try {
       final response = await loginService.loginAPi(getModel);
       if (response!.data != null) {
         isLogged.value = true;
-        await saveToken(response.data!.token);
+        await CacheManager.saveToken(response.data!.token);
       }
       return response;
     } on DioError catch (e) {
@@ -53,7 +48,7 @@ class LoginController extends GetxController with CacheManager {
   }
 
   Future<void> checkLoginStatus() async {
-    final token = getToken();
+    final token = CacheManager.getToken();
     if (token != null) {
       isLogged.value = true;
     }
@@ -61,27 +56,7 @@ class LoginController extends GetxController with CacheManager {
 
   void logOut() async {
     isLogged.value = false;
-    removeToken();
+    CacheManager.removeToken();
     googleAccount.value = await _googleSignin.signOut();
   }
 }
-
-mixin CacheManager {
-  Future<bool> saveToken(String? token) async {
-    final box = GetStorage();
-    await box.write(CacheManagerKey.token.toString(), token);
-    return true;
-  }
-
-  String? getToken() {
-    final box = GetStorage();
-    return box.read(CacheManagerKey.token.toString());
-  }
-
-  Future<void> removeToken() async {
-    final box = GetStorage();
-    await box.erase();
-  }
-}
-
-enum CacheManagerKey { token }

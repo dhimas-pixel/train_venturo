@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:train_venturo/modules/features/home/ui/home_view.dart';
 import 'package:train_venturo/modules/features/location/view/ui/location_view.dart';
 import 'package:train_venturo/modules/features/login/controllers/login_controller.dart';
 import 'package:train_venturo/modules/features/login/view/ui/login_view.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 getPages: appRoutes(),
                 home: loginController.isLogged.isTrue
-                    ? const LocationView()
+                    ? const HomeView()
                     : const LoginView(),
               ),
             ),
