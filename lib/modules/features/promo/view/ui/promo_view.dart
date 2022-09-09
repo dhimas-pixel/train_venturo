@@ -4,12 +4,13 @@ import 'package:train_venturo/modules/features/promo/view/ui/promo_tablet_body.d
 import 'package:train_venturo/shared/customs/responsive_layout.dart';
 
 class PromoView extends StatelessWidget {
-  final String type, name, nominal;
+  final String type, name, nominal, term;
   const PromoView({
     Key? key,
     required this.type,
     required this.name,
     required this.nominal,
+    required this.term,
   }) : super(key: key);
 
   @override
@@ -20,6 +21,7 @@ class PromoView extends StatelessWidget {
           type: type,
           name: name,
           nominal: nominal,
+          term: term,
         ),
         tabletBody: const PromoTabletBody(),
       ),

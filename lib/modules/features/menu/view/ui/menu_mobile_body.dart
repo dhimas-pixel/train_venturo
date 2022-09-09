@@ -96,6 +96,9 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                                                         'diskon'
                                                     ? "${menuController.data[i].nominal.toString()} %"
                                                     : "Rp. ${menuController.data[i].nominal.toString()}",
+                                                term: menuController.data[i]
+                                                        .syaratKetentuan ??
+                                                    "Null term",
                                               ),
                                             ),
                                             child: Padding(
@@ -132,9 +135,9 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                                               child: CardPromo(
                                                 width: 282,
                                                 height: 158,
-                                                type: "Load type",
-                                                name: "Load name",
-                                                nominal: "nominal",
+                                                type: " ",
+                                                name: " ",
+                                                nominal: " ",
                                               ),
                                             );
                                           },
