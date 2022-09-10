@@ -6,6 +6,9 @@ import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
 import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
+import 'package:train_venturo/modules/features/menu/view/components/menu_makanan.dart';
+import 'package:train_venturo/modules/features/menu/view/components/menu_minuman.dart';
+import 'package:train_venturo/modules/features/menu/view/components/menu_snack.dart';
 import 'package:train_venturo/modules/features/promo/view/ui/promo_view.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 import 'package:train_venturo/shared/widgets/scroll_behaviour.dart';
@@ -13,6 +16,7 @@ import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
 import '../../../../../shared/customs/card_promo.dart';
 import '../../../home/components/app_bar_home.dart';
+import '../components/all_menu.dart';
 
 class MenuMobileBody extends StatefulWidget {
   const MenuMobileBody({Key? key}) : super(key: key);
@@ -27,6 +31,10 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
   void didChangeDependencies() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       menuController.getPromo();
+      menuController.getAllMenu();
+      menuController.getMenuCategory("makanan");
+      menuController.getMenuCategory("minuman");
+      menuController.getMenuCategory("snack");
     });
     super.didChangeDependencies();
   }
@@ -85,20 +93,22 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                                             onTap: () => Get.to(
                                               () => PromoView(
                                                 type: menuController
-                                                        .data[i].type
+                                                        .dataPromo[i].type
                                                         ?.toUpperCase() ??
-                                                    "Null type",
+                                                    "",
                                                 name: menuController
-                                                        .data[i].nama ??
-                                                    "Null name",
+                                                        .dataPromo[i].nama ??
+                                                    "",
                                                 nominal: menuController
-                                                            .data[i].type ==
+                                                            .dataPromo[i]
+                                                            .type ==
                                                         'diskon'
-                                                    ? "${menuController.data[i].nominal.toString()} %"
-                                                    : "Rp. ${menuController.data[i].nominal.toString()}",
-                                                term: menuController.data[i]
+                                                    ? "${menuController.dataPromo[i].nominal.toString()} %"
+                                                    : "Rp. ${menuController.dataPromo[i].nominal.toString()}",
+                                                term: menuController
+                                                        .dataPromo[i]
                                                         .syaratKetentuan ??
-                                                    "Null term",
+                                                    "",
                                               ),
                                             ),
                                             child: Padding(
@@ -108,22 +118,24 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                                                 width: 282,
                                                 height: 158,
                                                 type: menuController
-                                                        .data[i].type
+                                                        .dataPromo[i].type
                                                         ?.toUpperCase() ??
-                                                    "Null type",
+                                                    "",
                                                 name: menuController
-                                                        .data[i].nama ??
-                                                    "Null name",
+                                                        .dataPromo[i].nama ??
+                                                    "",
                                                 nominal: menuController
-                                                            .data[i].type ==
+                                                            .dataPromo[i]
+                                                            .type ==
                                                         'diskon'
-                                                    ? "${menuController.data[i].nominal.toString()} %"
-                                                    : "Rp. ${menuController.data[i].nominal.toString()}",
+                                                    ? "${menuController.dataPromo[i].nominal.toString()} %"
+                                                    : "Rp. ${menuController.dataPromo[i].nominal.toString()}",
                                               ),
                                             ),
                                           );
                                         },
-                                        itemCount: menuController.data.length,
+                                        itemCount:
+                                            menuController.dataPromo.length,
                                       ),
                                       onLoading: ShimmerEffect(
                                         child: ListView.builder(
@@ -178,7 +190,7 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                             tabs: const [
                               Tab(
                                 icon: Icon(
-                                  Icons.menu_rounded,
+                                  Icons.format_list_bulleted_rounded,
                                 ),
                                 text: "Semua Menu",
                               ),
@@ -187,11 +199,11 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                                 text: "Makanan",
                               ),
                               Tab(
-                                icon: Icon(Icons.local_drink_rounded),
+                                icon: Icon(Icons.local_cafe_rounded),
                                 text: "Minuman",
                               ),
                               Tab(
-                                icon: Icon(Icons.breakfast_dining),
+                                icon: Icon(Icons.restaurant_rounded),
                                 text: "Snack",
                               ),
                             ],
@@ -199,18 +211,10 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
                           const Expanded(
                             child: TabBarView(
                               children: <Widget>[
-                                Center(
-                                  child: Icon(Icons.directions_car),
-                                ),
-                                Center(
-                                  child: Icon(Icons.directions_transit),
-                                ),
-                                Center(
-                                  child: Icon(Icons.directions_bike),
-                                ),
-                                Center(
-                                  child: Icon(Icons.directions_car),
-                                ),
+                                AllMenu(),
+                                MenuMakanan(),
+                                MenuMinuman(),
+                                MenuSnack(),
                               ],
                             ),
                           ),
