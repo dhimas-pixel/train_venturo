@@ -15,35 +15,22 @@ import 'package:train_venturo/shared/widgets/scroll_behaviour.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
 import '../../../../../shared/customs/card_promo.dart';
-import '../../../home/components/app_bar_home.dart';
+import '../components/app_bar_home.dart';
 import '../components/all_menu.dart';
+import '../components/card_menu.dart';
 
-class MenuMobileBody extends StatefulWidget {
+class MenuMobileBody extends GetView<MenuController> {
   const MenuMobileBody({Key? key}) : super(key: key);
-
-  @override
-  State<MenuMobileBody> createState() => _MenuMobileBodyState();
-}
-
-class _MenuMobileBodyState extends State<MenuMobileBody> {
-  final menuController = Get.put(MenuController());
-  @override
-  void didChangeDependencies() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      menuController.getPromo();
-      menuController.getAllMenu();
-      menuController.getMenuCategory("makanan");
-      menuController.getMenuCategory("minuman");
-      menuController.getMenuCategory("snack");
-    });
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const AppBarHome(),
+      appBar: AppBarHome(
+        onChanged: (value) {
+          controller.filterMenu(value);
+        },
+      ),
       body: ScrollConfiguration(
         behavior: MyBehavior(),
         child: SingleChildScrollView(
@@ -52,177 +39,214 @@ class _MenuMobileBodyState extends State<MenuMobileBody> {
             child: SizedBox(
               width: double.infinity,
               height: heightSized(context),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: SizedBox(
-                      height: 240,
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              child: Obx(
+                () => controller.isFound.value == true
+                    ? Column(
                         children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                "${AssetsUrl.svgUrl}ic_voucher.svg",
-                                width: 27,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: PrimaryTextStyle(
-                                  size: 20,
-                                  content: "Promo yang Tersedia",
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 25),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 158,
-                                    child: menuController.obx(
-                                      (_) => ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: (ctx, i) {
-                                          return GestureDetector(
-                                            onTap: () => Get.to(
-                                              () => PromoView(
-                                                type: menuController
-                                                        .dataPromo[i].type
-                                                        ?.toUpperCase() ??
-                                                    "",
-                                                name: menuController
-                                                        .dataPromo[i].nama ??
-                                                    "",
-                                                nominal: menuController
-                                                            .dataPromo[i]
-                                                            .type ==
-                                                        'diskon'
-                                                    ? "${menuController.dataPromo[i].nominal.toString()} %"
-                                                    : "Rp. ${menuController.dataPromo[i].nominal.toString()}",
-                                                term: menuController
-                                                        .dataPromo[i]
-                                                        .syaratKetentuan ??
-                                                    "",
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 20),
-                                              child: CardPromo(
-                                                width: 282,
-                                                height: 158,
-                                                type: menuController
-                                                        .dataPromo[i].type
-                                                        ?.toUpperCase() ??
-                                                    "",
-                                                name: menuController
-                                                        .dataPromo[i].nama ??
-                                                    "",
-                                                nominal: menuController
-                                                            .dataPromo[i]
-                                                            .type ==
-                                                        'diskon'
-                                                    ? "${menuController.dataPromo[i].nominal.toString()} %"
-                                                    : "Rp. ${menuController.dataPromo[i].nominal.toString()}",
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        itemCount:
-                                            menuController.dataPromo.length,
+                            padding: const EdgeInsets.only(left: 25.0),
+                            child: SizedBox(
+                              height: 240,
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "${AssetsUrl.svgUrl}ic_voucher.svg",
+                                        width: 27,
                                       ),
-                                      onLoading: ShimmerEffect(
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (ctx, i) {
-                                            return const Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              child: CardPromo(
-                                                width: 282,
-                                                height: 158,
-                                                type: " ",
-                                                name: " ",
-                                                nominal: " ",
-                                              ),
-                                            );
-                                          },
-                                          itemCount: 3,
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: PrimaryTextStyle(
+                                          size: 20,
+                                          content: "Promo yang Tersedia",
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 25),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: SizedBox(
+                                            height: 158,
+                                            child: controller.obx(
+                                              (_) => ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemBuilder: (ctx, i) {
+                                                  return GestureDetector(
+                                                    onTap: () => Get.to(
+                                                      () => PromoView(
+                                                        type: controller
+                                                                .dataPromo[i]
+                                                                .type
+                                                                ?.toUpperCase() ??
+                                                            "",
+                                                        name: controller
+                                                                .dataPromo[i]
+                                                                .nama ??
+                                                            "",
+                                                        nominal: controller
+                                                                    .dataPromo[
+                                                                        i]
+                                                                    .type ==
+                                                                'diskon'
+                                                            ? "${controller.dataPromo[i].nominal.toString()} %"
+                                                            : "Rp. ${controller.dataPromo[i].nominal.toString()}",
+                                                        term: controller
+                                                                .dataPromo[i]
+                                                                .syaratKetentuan ??
+                                                            "",
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 20),
+                                                      child: CardPromo(
+                                                        width: 282,
+                                                        height: 158,
+                                                        type: controller
+                                                                .dataPromo[i]
+                                                                .type
+                                                                ?.toUpperCase() ??
+                                                            "",
+                                                        name: controller
+                                                                .dataPromo[i]
+                                                                .nama ??
+                                                            "",
+                                                        nominal: controller
+                                                                    .dataPromo[
+                                                                        i]
+                                                                    .type ==
+                                                                'diskon'
+                                                            ? "${controller.dataPromo[i].nominal.toString()} %"
+                                                            : "Rp. ${controller.dataPromo[i].nominal.toString()}",
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                itemCount:
+                                                    controller.dataPromo.length,
+                                              ),
+                                              onLoading: ShimmerEffect(
+                                                child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemBuilder: (ctx, i) {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 20),
+                                                      child: CardPromo(
+                                                        width: 282,
+                                                        height: 158,
+                                                        type: " ",
+                                                        name: " ",
+                                                        nominal: " ",
+                                                      ),
+                                                    );
+                                                  },
+                                                  itemCount: 3,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: DefaultTabController(
+                              length: 4,
+                              child: Column(
+                                children: [
+                                  ButtonsTabBar(
+                                    backgroundColor: kBlackSecondaryColor,
+                                    unselectedBackgroundColor: kSecondaryColor,
+                                    unselectedLabelStyle: const TextStyle(
+                                      color: kWhiteColor,
+                                      fontSize: 20,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    radius: 30,
+                                    height: 40,
+                                    buttonMargin: const EdgeInsets.symmetric(
+                                        horizontal: 6),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    labelSpacing: 10,
+                                    tabs: const [
+                                      Tab(
+                                        icon: Icon(
+                                          Icons.format_list_bulleted_rounded,
+                                        ),
+                                        text: "Semua Menu",
+                                      ),
+                                      Tab(
+                                        icon: Icon(Icons.rice_bowl_rounded),
+                                        text: "Makanan",
+                                      ),
+                                      Tab(
+                                        icon: Icon(Icons.local_cafe_rounded),
+                                        text: "Minuman",
+                                      ),
+                                      Tab(
+                                        icon: Icon(Icons.restaurant_rounded),
+                                        text: "Snack",
+                                      ),
+                                    ],
+                                  ),
+                                  const Expanded(
+                                    child: TabBarView(
+                                      children: <Widget>[
+                                        AllMenu(),
+                                        MenuMakanan(),
+                                        MenuMinuman(),
+                                        MenuSnack(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: DefaultTabController(
-                      length: 4,
-                      child: Column(
-                        children: [
-                          ButtonsTabBar(
-                            backgroundColor: kBlackSecondaryColor,
-                            unselectedBackgroundColor: kSecondaryColor,
-                            unselectedLabelStyle: const TextStyle(
-                              color: kWhiteColor,
-                              fontSize: 20,
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w500,
-                            ),
-                            radius: 30,
-                            height: 40,
-                            buttonMargin:
-                                const EdgeInsets.symmetric(horizontal: 6),
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 16),
-                            labelSpacing: 10,
-                            tabs: const [
-                              Tab(
-                                icon: Icon(
-                                  Icons.format_list_bulleted_rounded,
+                      )
+                    : Obx(
+                        () => ListView.builder(
+                          itemBuilder: (ctx, i) {
+                            return CardMenu(
+                              image: FadeInImage(
+                                placeholder: const AssetImage(
+                                    "${AssetsUrl.imgUrl}ic_loading.gif"),
+                                image: NetworkImage(
+                                  controller.foundMenu.value[i].foto.toString(),
                                 ),
-                                text: "Semua Menu",
+                                imageErrorBuilder: (cont5ext, error,
+                                        stackTrace) =>
+                                    Image.asset(
+                                        "${AssetsUrl.imgUrl}ic_no_image.png"),
                               ),
-                              Tab(
-                                icon: Icon(Icons.rice_bowl_rounded),
-                                text: "Makanan",
-                              ),
-                              Tab(
-                                icon: Icon(Icons.local_cafe_rounded),
-                                text: "Minuman",
-                              ),
-                              Tab(
-                                icon: Icon(Icons.restaurant_rounded),
-                                text: "Snack",
-                              ),
-                            ],
-                          ),
-                          const Expanded(
-                            child: TabBarView(
-                              children: <Widget>[
-                                AllMenu(),
-                                MenuMakanan(),
-                                MenuMinuman(),
-                                MenuSnack(),
-                              ],
-                            ),
-                          ),
-                        ],
+                              name: controller.foundMenu.value[i].nama ?? "",
+                              cost: controller.foundMenu.value[i].harga
+                                  .toString(),
+                            );
+                          },
+                          itemCount: controller.foundMenu.value.length,
+                        ),
                       ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ),

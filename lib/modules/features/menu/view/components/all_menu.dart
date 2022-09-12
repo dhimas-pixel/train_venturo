@@ -23,7 +23,7 @@ class AllMenu extends StatelessWidget {
                 image: NetworkImage(
                   menuController.dataAllMenu[i].foto.toString(),
                 ),
-                imageErrorBuilder: (context, error, stackTrace) =>
+                imageErrorBuilder: (cont5ext, error, stackTrace) =>
                     Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
               ),
               name: menuController.dataAllMenu[i].nama ?? "",

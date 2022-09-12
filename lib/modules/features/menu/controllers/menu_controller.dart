@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/menu/repository/menu_service.dart';
 import 'package:train_venturo/modules/features/menu/repository/promo_service.dart';
@@ -11,59 +12,90 @@ class MenuController extends GetxController with StateMixin {
   PromoService promoService = PromoService();
   MenuService menuService = MenuService();
 
-  late List<promo.Data> _dataPromo = [];
-  List<promo.Data> get dataPromo => _dataPromo;
+  RxBool isFound = true.obs;
 
-  late List<menu.Data> _dataAllMenu = [];
-  List<menu.Data> get dataAllMenu => _dataAllMenu;
+  final RxList<promo.Data> _dataPromo = <promo.Data>[].obs;
+  RxList<promo.Data> get dataPromo => _dataPromo;
 
-  late List<menu.Data> _dataFood = [];
-  List<menu.Data> get dataFood => _dataFood;
+  final RxList<menu.Data> _dataAllMenu = <menu.Data>[].obs;
+  RxList<menu.Data> get dataAllMenu => _dataAllMenu;
 
-  late List<menu.Data> _dataDrink = [];
-  List<menu.Data> get dataDrink => _dataDrink;
+  Rx<List<menu.Data>> foundMenu = Rx<List<menu.Data>>([]);
 
-  late List<menu.Data> _dataSnack = [];
-  List<menu.Data> get dataSnack => _dataSnack;
+  final RxList<menu.Data> _dataFood = <menu.Data>[].obs;
+  RxList<menu.Data> get dataFood => _dataFood;
 
-  Future<void> getPromo() async {
+  final RxList<menu.Data> _dataDrink = <menu.Data>[].obs;
+  RxList<menu.Data> get dataDrink => _dataDrink;
+
+  final RxList<menu.Data> _dataSnack = <menu.Data>[].obs;
+  RxList<menu.Data> get dataSnack => _dataSnack;
+
+  void getPromo() async {
     change(null, status: RxStatus.loading());
     try {
       final response = await promoService.getPromo();
-      _dataPromo = response!.data!;
+      _dataPromo.value = response!.data!;
     } on DioError {
-      _dataPromo = [];
+      _dataPromo.value = [];
     }
     change(null, status: RxStatus.success());
   }
 
-  Future<void> getAllMenu() async {
+  void getAllMenu() async {
     change(null, status: RxStatus.loading());
     try {
       final response = await menuService.getAllMenu();
-      _dataAllMenu = response!.data!;
+      _dataAllMenu.value = response!.data!;
     } on DioError {
-      _dataAllMenu = [];
+      _dataAllMenu.value = [];
     }
     change(null, status: RxStatus.success());
   }
 
-  Future<void> getMenuCategory(String where) async {
+  void getMenuCategory(String where) async {
     change(null, status: RxStatus.loading());
     try {
       final response = await menuService.getMenuCategory(where);
       if (where == "makanan") {
-        _dataFood = response!.data!;
+        _dataFood.value = response!.data!;
       } else if (where == "minuman") {
-        _dataDrink = response!.data!;
+        _dataDrink.value = response!.data!;
       } else {
-        _dataSnack = response!.data!;
+        _dataSnack.value = response!.data!;
       }
     } on DioError {
-      _dataFood = [];
-      _dataDrink = [];
-      _dataSnack = [];
+      _dataFood.value = [];
+      _dataDrink.value = [];
+      _dataSnack.value = [];
     }
     change(null, status: RxStatus.success());
+  }
+
+  @override
+  void onInit() {
+    getPromo();
+    getAllMenu();
+    getMenuCategory('makanan');
+    getMenuCategory('minuman');
+    getMenuCategory('snack');
+    foundMenu.value = _dataAllMenu;
+    super.onInit();
+  }
+
+  void filterMenu(String menuName) {
+    List<menu.Data> results = [];
+    if (menuName.isEmpty) {
+      isFound.value = true;
+    } else {
+      isFound.value = false;
+      results = _dataAllMenu
+          .where((element) => element.nama
+              .toString()
+              .toLowerCase()
+              .contains(menuName.toLowerCase()))
+          .toList();
+    }
+    foundMenu.value = results;
   }
 }
