@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../config/themes/color.dart';
+import '../../../../../../config/themes/color.dart';
 
 class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
+  final void Function(String) onChanged;
   const AppBarHome({
     Key? key,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -13,13 +15,14 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(top: 6),
+      title: Padding(
+        padding: const EdgeInsets.only(top: 6),
         child: SizedBox(
           height: 50,
           child: TextField(
+            onChanged: onChanged,
             cursorColor: kPrimaryColor,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Pencairan",
               hintStyle: TextStyle(
                 color: kGreyColor,
