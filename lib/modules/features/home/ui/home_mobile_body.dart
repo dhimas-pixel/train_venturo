@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/config/themes/color.dart';
-import 'package:train_venturo/modules/features/connection/connection_view.dart';
 import 'package:train_venturo/modules/features/profile/ui/profile_view.dart';
 
 import '../../login/controllers/login_controller.dart';
+import '../../menu/controllers/menu_controller.dart';
 import '../../menu/view/ui/menu_view.dart';
 import '../components/icon_navbar_home.dart';
 
@@ -34,6 +34,9 @@ class _HomeMobileBodyState extends State<HomeMobileBody> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<MenuController>(
+      () => MenuController(),
+    );
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       body: SafeArea(
