@@ -47,38 +47,50 @@ class MenuController extends GetxController with StateMixin {
     try {
       final response = await menuService.getAllMenu();
       _dataAllMenu.value = response!.data!;
+      _dataFood.value = _dataAllMenu
+          .where((element) =>
+              element.kategori.toString().toLowerCase().contains('makanan'))
+          .toList();
+      _dataDrink.value = _dataAllMenu
+          .where((element) =>
+              element.kategori.toString().toLowerCase().contains('minuman'))
+          .toList();
+      _dataSnack.value = _dataAllMenu
+          .where((element) =>
+              element.kategori.toString().toLowerCase().contains('snack'))
+          .toList();
     } on DioError {
       _dataAllMenu.value = [];
     }
     change(null, status: RxStatus.success());
   }
 
-  void getMenuCategory(String where) async {
-    change(null, status: RxStatus.loading());
-    try {
-      final response = await menuService.getMenuCategory(where);
-      if (where == "makanan") {
-        _dataFood.value = response!.data!;
-      } else if (where == "minuman") {
-        _dataDrink.value = response!.data!;
-      } else {
-        _dataSnack.value = response!.data!;
-      }
-    } on DioError {
-      _dataFood.value = [];
-      _dataDrink.value = [];
-      _dataSnack.value = [];
-    }
-    change(null, status: RxStatus.success());
-  }
+  // void getMenuCategory(String where) async {
+  //   change(null, status: RxStatus.loading());
+  //   try {
+  //     final response = await menuService.getMenuCategory(where);
+  //     if (where == "makanan") {
+  //       _dataFood.value = response!.data!;
+  //     } else if (where == "minuman") {
+  //       _dataDrink.value = response!.data!;
+  //     } else {
+  //       _dataSnack.value = response!.data!;
+  //     }
+  //   } on DioError {
+  //     _dataFood.value = [];
+  //     _dataDrink.value = [];
+  //     _dataSnack.value = [];
+  //   }
+  //   change(null, status: RxStatus.success());
+  // }
 
   @override
   void onInit() {
     getPromo();
     getAllMenu();
-    getMenuCategory('makanan');
-    getMenuCategory('minuman');
-    getMenuCategory('snack');
+    // getMenuCategory('makanan');
+    // getMenuCategory('minuman');
+    // getMenuCategory('snack');
     foundMenu.value = _dataAllMenu;
     super.onInit();
   }
@@ -97,5 +109,40 @@ class MenuController extends GetxController with StateMixin {
           .toList();
     }
     foundMenu.value = results;
+  }
+
+  void increatment(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    countAll[0].jumlah++;
+    update();
+    // _dataAllMenu[index].jumlah++;
+    // _dataFood[index].jumlah++;
+    // List<menu.Data> results = [];
+    // var countFood =
+    //     _dataFood.where((element) => element.idMenu == idMenu).toList();
+    // var countDrink =
+    //     _dataDrink.where((element) => element.idMenu == idMenu).toList();
+    // print(idMenu);
+    // countAll[0].jumlah++;
+    // countFood[0].jumlah++;
+    // countDrink[0].jumlah++;
+    // if (category == 'makanan') {
+    //   // print(countFood[0].jumlah++);
+    // }
+    // print(countAll[0].nama);
+    // print(countDrink[0].jumlah++);
+    // print(countFood[0].nama);
+    // print(countAll[0].nama);
+    // print(countDrink[0].nama);
+  }
+
+  void decreatment(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    if (countAll[0].jumlah > 0) {
+      countAll[0].jumlah--;
+    }
+    update();
   }
 }

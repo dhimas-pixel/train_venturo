@@ -6,14 +6,13 @@ import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
 import 'card_menu.dart';
 
-class AllMenu extends StatelessWidget {
+class AllMenu extends GetView<MenuController> {
   const AllMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final menuController = Get.find<MenuController>();
     return SizedBox(
-      child: menuController.obx(
+      child: controller.obx(
         (_) => ListView.builder(
           itemBuilder: (ctx, i) {
             return CardMenu(
@@ -21,16 +20,23 @@ class AllMenu extends StatelessWidget {
                 placeholder:
                     const AssetImage("${AssetsUrl.imgUrl}ic_loading.gif"),
                 image: NetworkImage(
-                  menuController.dataAllMenu[i].foto.toString(),
+                  controller.dataAllMenu[i].foto.toString(),
                 ),
                 imageErrorBuilder: (cont5ext, error, stackTrace) =>
                     Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
               ),
-              name: menuController.dataAllMenu[i].nama ?? "",
-              cost: menuController.dataAllMenu[i].harga.toString(),
+              name: controller.dataAllMenu[i].nama ?? "",
+              cost: controller.dataAllMenu[i].harga.toString(),
+              quantity: controller.dataAllMenu[i].jumlah.toString(),
+              increament: () {
+                controller.increatment(controller.dataAllMenu[i].idMenu ?? 0);
+              },
+              decreament: () {
+                controller.decreatment(controller.dataAllMenu[i].idMenu ?? 0);
+              },
             );
           },
-          itemCount: menuController.dataAllMenu.length,
+          itemCount: controller.dataAllMenu.length,
         ),
         onLoading: ListView.builder(
           itemBuilder: (ctx, i) {
@@ -39,6 +45,9 @@ class AllMenu extends StatelessWidget {
                 image: Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
                 name: "",
                 cost: "",
+                quantity: '',
+                increament: () {},
+                decreament: () {},
               ),
             );
           },

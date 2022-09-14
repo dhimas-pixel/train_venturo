@@ -6,14 +6,13 @@ import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
 import 'card_menu.dart';
 
-class MenuMinuman extends StatelessWidget {
+class MenuMinuman extends GetView<MenuController> {
   const MenuMinuman({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final menuController = Get.find<MenuController>();
     return SizedBox(
-      child: menuController.obx(
+      child: controller.obx(
         (_) => ListView.builder(
           itemBuilder: (ctx, i) {
             return CardMenu(
@@ -21,16 +20,23 @@ class MenuMinuman extends StatelessWidget {
                 placeholder:
                     const AssetImage("${AssetsUrl.imgUrl}ic_loading.gif"),
                 image: NetworkImage(
-                  menuController.dataDrink[i].foto.toString(),
+                  controller.dataDrink[i].foto.toString(),
                 ),
                 imageErrorBuilder: (context, error, stackTrace) =>
                     Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
               ),
-              name: menuController.dataDrink[i].nama ?? "",
-              cost: menuController.dataDrink[i].harga.toString(),
+              name: controller.dataDrink[i].nama ?? "",
+              cost: controller.dataDrink[i].harga.toString(),
+              quantity: controller.dataDrink[i].jumlah.toString(),
+              increament: () {
+                controller.increatment(controller.dataDrink[i].idMenu ?? 0);
+              },
+              decreament: () {
+                controller.decreatment(controller.dataDrink[i].idMenu ?? 0);
+              },
             );
           },
-          itemCount: menuController.dataDrink.length,
+          itemCount: controller.dataDrink.length,
         ),
         onLoading: ListView.builder(
           itemBuilder: (ctx, i) {
@@ -39,6 +45,9 @@ class MenuMinuman extends StatelessWidget {
                 image: Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
                 name: "",
                 cost: "",
+                quantity: '',
+                increament: () {},
+                decreament: () {},
               ),
             );
           },

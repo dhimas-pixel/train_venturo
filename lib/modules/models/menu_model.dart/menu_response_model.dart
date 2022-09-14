@@ -32,15 +32,18 @@ class Data {
   String? deskripsi;
   String? foto;
   int? status;
+  late int jumlah;
 
-  Data(
-      {this.idMenu,
-      this.nama,
-      this.kategori,
-      this.harga,
-      this.deskripsi,
-      this.foto,
-      this.status});
+  Data({
+    this.idMenu,
+    this.nama,
+    this.kategori,
+    this.harga,
+    this.deskripsi,
+    this.foto,
+    this.status,
+    this.jumlah = 0,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     idMenu = json['id_menu'];
@@ -50,6 +53,7 @@ class Data {
     deskripsi = json['deskripsi'];
     foto = json['foto'];
     status = json['status'];
+    jumlah = 0;
   }
 
   Map<String, dynamic> toJson() {

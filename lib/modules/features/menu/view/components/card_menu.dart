@@ -6,12 +6,16 @@ import '../../../../../shared/customs/small_button.dart';
 
 class CardMenu extends StatelessWidget {
   final Widget image;
-  final String name, cost;
+  final String name, cost, quantity;
+  final VoidCallback increament, decreament;
   const CardMenu({
     Key? key,
     required this.image,
     required this.name,
     required this.cost,
+    required this.quantity,
+    required this.increament,
+    required this.decreament,
   }) : super(key: key);
 
   @override
@@ -86,16 +90,16 @@ class CardMenu extends StatelessWidget {
                 child: Row(
                   children: [
                     SmallButton(
-                      onTap: () {},
+                      onTap: decreament,
                       icon: Icons.indeterminate_check_box_outlined,
                     ),
-                    const PrimaryTextStyle(
+                    PrimaryTextStyle(
                       size: 15,
-                      content: "10",
+                      content: quantity,
                       color: kBlackPrimaryColor,
                     ),
                     SmallButton(
-                      onTap: () {},
+                      onTap: increament,
                       icon: Icons.add_box_rounded,
                     ),
                   ],
