@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../../config/themes/color.dart';
 import '../../../../../shared/customs/primary_text_style.dart';
 import '../../../../../shared/customs/small_button.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 
 class CardMenu extends StatelessWidget {
   final Widget image;
-  final String name, cost, quantity;
+  final String name, cost;
+  final int quantity;
   final VoidCallback increament, decreament;
   const CardMenu({
     Key? key,
@@ -89,14 +91,27 @@ class CardMenu extends StatelessWidget {
                 bottom: 15,
                 child: Row(
                   children: [
-                    SmallButton(
-                      onTap: decreament,
-                      icon: Icons.indeterminate_check_box_outlined,
+                    Conditional.single(
+                      context: context,
+                      conditionBuilder: (BuildContext context) => quantity == 0,
+                      widgetBuilder: (BuildContext context) =>
+                          const SizedBox.shrink(),
+                      fallbackBuilder: (BuildContext context) => SmallButton(
+                        onTap: decreament,
+                        icon: Icons.indeterminate_check_box_outlined,
+                      ),
                     ),
-                    PrimaryTextStyle(
-                      size: 15,
-                      content: quantity,
-                      color: kBlackPrimaryColor,
+                    Conditional.single(
+                      context: context,
+                      conditionBuilder: (BuildContext context) => quantity == 0,
+                      widgetBuilder: (BuildContext context) =>
+                          const SizedBox.shrink(),
+                      fallbackBuilder: (BuildContext context) =>
+                          PrimaryTextStyle(
+                        size: 15,
+                        content: quantity.toString(),
+                        color: kBlackPrimaryColor,
+                      ),
                     ),
                     SmallButton(
                       onTap: increament,
