@@ -54,7 +54,7 @@ loadData(BuildContext context) async {
                   'Loading...',
                   style: TextStyle(
                     fontSize: 16,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Montserrat',
                   ),
                 )
               ],

@@ -6,6 +6,7 @@ class BaseUrl {
   static const promoUrl = '${_baseUrl}promo/all';
   static const allMenuUrl = '${_baseUrl}menu/all';
   static const kategoriMenuUrl = '${_baseUrl}menu/kategori/';
+  static const detailMenuUrl = '${_baseUrl}menu/detail/';
 
   static final dio = Dio();
 }
