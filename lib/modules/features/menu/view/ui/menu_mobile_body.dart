@@ -14,6 +14,7 @@ import 'package:train_venturo/shared/customs/primary_text_style.dart';
 import 'package:train_venturo/shared/widgets/scroll_behaviour.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
+import '../../../../../config/routes/name_routes.dart';
 import '../../../../../shared/customs/card_promo.dart';
 import '../components/app_bar_home.dart';
 import '../components/all_menu.dart';
@@ -232,28 +233,43 @@ class MenuMobileBody extends GetView<MenuController> {
                 : Obx(
                     () => ListView.builder(
                       itemBuilder: (ctx, i) {
-                        return CardMenu(
-                          image: FadeInImage(
-                            placeholder: const AssetImage(
-                                "${AssetsUrl.imgUrl}ic_loading.gif"),
-                            image: NetworkImage(
-                              controller.foundMenu.value[i].foto.toString(),
-                            ),
-                            imageErrorBuilder: (context, error, stackTrace) =>
-                                Image.asset(
-                                    "${AssetsUrl.imgUrl}ic_no_image.png"),
-                          ),
-                          name: controller.foundMenu.value[i].nama ?? "",
-                          cost: controller.foundMenu.value[i].harga.toString(),
-                          quantity:
-                              controller.foundMenu.value[i].jumlah.toString(),
-                          increament: () {
-                            controller.increatment(
-                                controller.foundMenu.value[i].idMenu ?? 0);
-                          },
-                          decreament: () {
-                            controller.decreatment(
-                                controller.foundMenu.value[i].idMenu ?? 0);
+                        return GetBuilder<MenuController>(
+                          init: MenuController(),
+                          builder: (_) {
+                            return GestureDetector(
+                              onTap: () => Get.toNamed(AppRoutes.detailMenuView,
+                                  arguments:
+                                      controller.foundMenu.value[i].idMenu ??
+                                          0),
+                              child: CardMenu(
+                                image: FadeInImage(
+                                  placeholder: const AssetImage(
+                                      "${AssetsUrl.imgUrl}ic_loading.gif"),
+                                  image: NetworkImage(
+                                    controller.foundMenu.value[i].foto
+                                        .toString(),
+                                  ),
+                                  imageErrorBuilder: (context, error,
+                                          stackTrace) =>
+                                      Image.asset(
+                                          "${AssetsUrl.imgUrl}ic_no_image.png"),
+                                ),
+                                name: controller.foundMenu.value[i].nama ?? "",
+                                cost: controller.foundMenu.value[i].harga
+                                    .toString(),
+                                quantity: controller.foundMenu.value[i].jumlah,
+                                increament: () {
+                                  controller.increatment(
+                                      controller.foundMenu.value[i].idMenu ??
+                                          0);
+                                },
+                                decreament: () {
+                                  controller.decreatment(
+                                      controller.foundMenu.value[i].idMenu ??
+                                          0);
+                                },
+                              ),
+                            );
                           },
                         );
                       },

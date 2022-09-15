@@ -4,6 +4,7 @@ import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
+import '../../../../../config/routes/name_routes.dart';
 import 'card_menu.dart';
 
 class MenuMakanan extends GetView<MenuController> {
@@ -15,25 +16,29 @@ class MenuMakanan extends GetView<MenuController> {
       child: controller.obx(
         (_) => ListView.builder(
           itemBuilder: (ctx, i) {
-            return CardMenu(
-              image: FadeInImage(
-                placeholder:
-                    const AssetImage("${AssetsUrl.imgUrl}ic_loading.gif"),
-                image: NetworkImage(
-                  controller.dataFood[i].foto.toString(),
+            return GestureDetector(
+              onTap: () => Get.toNamed(AppRoutes.detailMenuView,
+                  arguments: controller.dataFood[i].idMenu ?? 0),
+              child: CardMenu(
+                image: FadeInImage(
+                  placeholder:
+                      const AssetImage("${AssetsUrl.imgUrl}ic_loading.gif"),
+                  image: NetworkImage(
+                    controller.dataFood[i].foto.toString(),
+                  ),
+                  imageErrorBuilder: (context, error, stackTrace) =>
+                      Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
                 ),
-                imageErrorBuilder: (context, error, stackTrace) =>
-                    Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
+                name: controller.dataFood[i].nama ?? "",
+                cost: controller.dataFood[i].harga.toString(),
+                quantity: controller.dataFood[i].jumlah,
+                increament: () {
+                  controller.increatment(controller.dataFood[i].idMenu ?? 0);
+                },
+                decreament: () {
+                  controller.decreatment(controller.dataFood[i].idMenu ?? 0);
+                },
               ),
-              name: controller.dataFood[i].nama ?? "",
-              cost: controller.dataFood[i].harga.toString(),
-              quantity: controller.dataFood[i].jumlah.toString(),
-              increament: () {
-                controller.increatment(controller.dataFood[i].idMenu ?? 0);
-              },
-              decreament: () {
-                controller.decreatment(controller.dataFood[i].idMenu ?? 0);
-              },
             );
           },
           itemCount: controller.dataFood.length,
@@ -45,7 +50,7 @@ class MenuMakanan extends GetView<MenuController> {
                 image: Image.asset("${AssetsUrl.imgUrl}ic_no_image.png"),
                 name: "",
                 cost: "",
-                quantity: '',
+                quantity: 0,
                 increament: () {},
                 decreament: () {},
               ),

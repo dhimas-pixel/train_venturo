@@ -19,7 +19,7 @@ class _HomeMobileBodyState extends State<HomeMobileBody> {
   final loginController = Get.find<LoginController>();
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    ManuView(),
+    MenuView(),
     Text(
       'Index 1: Business',
     ),

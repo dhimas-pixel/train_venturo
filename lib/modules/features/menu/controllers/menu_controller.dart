@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/menu/repository/menu_service.dart';
 import 'package:train_venturo/modules/features/menu/repository/promo_service.dart';
 import 'package:train_venturo/modules/models/promo_model.dart/promo_response_model.dart'
     as promo;
 
+import '../../../../config/routes/name_routes.dart';
 import '../../../models/menu_model.dart/menu_response_model.dart' as menu;
 
 class MenuController extends GetxController with StateMixin {
@@ -13,6 +13,8 @@ class MenuController extends GetxController with StateMixin {
   MenuService menuService = MenuService();
 
   RxBool isFound = true.obs;
+
+  static MenuController get to => Get.find();
 
   final RxList<promo.Data> _dataPromo = <promo.Data>[].obs;
   RxList<promo.Data> get dataPromo => _dataPromo;
@@ -31,7 +33,7 @@ class MenuController extends GetxController with StateMixin {
   final RxList<menu.Data> _dataSnack = <menu.Data>[].obs;
   RxList<menu.Data> get dataSnack => _dataSnack;
 
-  void getPromo() async {
+  Future<void> getPromo() async {
     change(null, status: RxStatus.loading());
     try {
       final response = await promoService.getPromo();
@@ -42,7 +44,7 @@ class MenuController extends GetxController with StateMixin {
     change(null, status: RxStatus.success());
   }
 
-  void getAllMenu() async {
+  Future<void> getAllMenu() async {
     change(null, status: RxStatus.loading());
     try {
       final response = await menuService.getAllMenu();
@@ -114,27 +116,11 @@ class MenuController extends GetxController with StateMixin {
   void increatment(int idMenu) {
     var countAll =
         _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    if (countAll[0].jumlah == 0) {
+      Get.toNamed(AppRoutes.detailMenuView, arguments: idMenu);
+    }
     countAll[0].jumlah++;
     update();
-    // _dataAllMenu[index].jumlah++;
-    // _dataFood[index].jumlah++;
-    // List<menu.Data> results = [];
-    // var countFood =
-    //     _dataFood.where((element) => element.idMenu == idMenu).toList();
-    // var countDrink =
-    //     _dataDrink.where((element) => element.idMenu == idMenu).toList();
-    // print(idMenu);
-    // countAll[0].jumlah++;
-    // countFood[0].jumlah++;
-    // countDrink[0].jumlah++;
-    // if (category == 'makanan') {
-    //   // print(countFood[0].jumlah++);
-    // }
-    // print(countAll[0].nama);
-    // print(countDrink[0].jumlah++);
-    // print(countFood[0].nama);
-    // print(countAll[0].nama);
-    // print(countDrink[0].nama);
   }
 
   void decreatment(int idMenu) {
@@ -144,5 +130,12 @@ class MenuController extends GetxController with StateMixin {
       countAll[0].jumlah--;
     }
     update();
+  }
+
+  Rx<String> getCount(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    String getData = countAll[0].jumlah.toString();
+    return getData.obs;
   }
 }
