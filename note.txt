@@ -1,0 +1,2 @@
+increament tinggal mainin di array nya aja
+untuk handling level dan toping belum

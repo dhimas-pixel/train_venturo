@@ -4,6 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/detail_menu/controllers/detail_menu_controller.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
+import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+    as menu;
+import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+    as order;
 import 'package:train_venturo/shared/customs/appbar_primary.dart';
 import 'package:train_venturo/shared/customs/primary_button.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
@@ -179,9 +183,13 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                       return Obx(
                                                         () => ChooseItem(
                                                           onTap: () {
-                                                            controller
-                                                                .checkOptionLevel(
-                                                                    i + 1);
+                                                            controller.checkOptionLevel(
+                                                                i + 1,
+                                                                controller
+                                                                        .dataDetailMenu
+                                                                        .menu
+                                                                        ?.idMenu ??
+                                                                    0);
                                                           },
                                                           item: controller
                                                                   .dataDetailMenu
@@ -363,14 +371,75 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                           ),
                                         ],
                                       ),
-                                      PrimaryButton(
-                                        text: "Tambahkan Ke Pesanan",
-                                        press: () {},
-                                        color: kSecondaryColor,
-                                        width: widthSized(context),
-                                        fontSize: 16,
-                                        textColor: kWhiteColor,
-                                        fontWeight: FontWeight.w600,
+                                      GetBuilder<MenuController>(
+                                        init: MenuController(),
+                                        initState: (_) {},
+                                        builder: (state) {
+                                          return PrimaryButton(
+                                            text: "Tambahkan Ke Pesanan",
+                                            press: () {
+                                              if (state
+                                                      .getCount(controller
+                                                              .dataDetailMenu
+                                                              .menu
+                                                              ?.idMenu ??
+                                                          0)
+                                                      .value !=
+                                                  0) {
+                                                final setData = order.Menu(
+                                                  idMenu: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.idMenu ??
+                                                      0,
+                                                  harga: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.harga ??
+                                                      0,
+                                                  level:
+                                                      controller.idLevel.value,
+                                                  topping: [2],
+                                                  jumlah: state
+                                                      .getCount(controller
+                                                              .dataDetailMenu
+                                                              .menu
+                                                              ?.idMenu ??
+                                                          0)
+                                                      .value,
+                                                );
+                                                final setDummy = menu.Data(
+                                                  foto: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.foto ??
+                                                      "",
+                                                  nama: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.nama ??
+                                                      "",
+                                                );
+                                                state.addCardManager(
+                                                    setData, setDummy);
+                                              }
+                                            },
+                                            color: state
+                                                        .getCount(controller
+                                                                .dataDetailMenu
+                                                                .menu
+                                                                ?.idMenu ??
+                                                            0)
+                                                        .value ==
+                                                    0
+                                                ? kGreyColor
+                                                : kSecondaryColor,
+                                            width: widthSized(context),
+                                            fontSize: 16,
+                                            textColor: kWhiteColor,
+                                            fontWeight: FontWeight.w600,
+                                          );
+                                        },
                                       )
                                     ],
                                   ),
@@ -399,7 +468,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                           .getCount(controller.dataDetailMenu
                                                   .menu?.idMenu ??
                                               0)
-                                          .value,
+                                          .toString(),
                                       color: kBlackPrimaryColor,
                                     );
                                   },

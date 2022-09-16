@@ -48,6 +48,7 @@ dependencies:
   shimmer: ^2.0.0
   flutter_html: ^3.0.0-alpha.3
   flutter_conditional_rendering: ^2.0.0
+  badges: ^2.0.3
 
 dev_dependencies:
   flutter_test:

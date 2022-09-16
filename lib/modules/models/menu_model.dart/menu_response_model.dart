@@ -32,6 +32,7 @@ class Data {
   String? deskripsi;
   String? foto;
   int? status;
+  late int level;
   late int jumlah;
 
   Data({
@@ -42,6 +43,7 @@ class Data {
     this.deskripsi,
     this.foto,
     this.status,
+    this.level = 0,
     this.jumlah = 0,
   });
 
@@ -53,6 +55,7 @@ class Data {
     deskripsi = json['deskripsi'];
     foto = json['foto'];
     status = json['status'];
+    level = 0;
     jumlah = 0;
   }
 
