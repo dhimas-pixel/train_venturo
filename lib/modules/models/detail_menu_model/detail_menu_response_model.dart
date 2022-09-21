@@ -104,8 +104,16 @@ class Topping {
   String? keterangan;
   String? type;
   int? harga;
+  bool? isSelected;
 
-  Topping({this.idDetail, this.idMenu, this.keterangan, this.type, this.harga});
+  Topping({
+    this.idDetail,
+    this.idMenu,
+    this.keterangan,
+    this.type,
+    this.harga,
+    this.isSelected = false,
+  });
 
   Topping.fromJson(Map<String, dynamic> json) {
     idDetail = json['id_detail'];
@@ -113,6 +121,7 @@ class Topping {
     keterangan = json['keterangan'];
     type = json['type'];
     harga = json['harga'];
+    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {
@@ -132,8 +141,16 @@ class Level {
   String? keterangan;
   String? type;
   int? harga;
+  bool? isSelected;
 
-  Level({this.idDetail, this.idMenu, this.keterangan, this.type, this.harga});
+  Level({
+    this.idDetail,
+    this.idMenu,
+    this.keterangan,
+    this.type,
+    this.harga,
+    this.isSelected = false,
+  });
 
   Level.fromJson(Map<String, dynamic> json) {
     idDetail = json['id_detail'];

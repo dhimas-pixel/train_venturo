@@ -43,6 +43,3 @@ appRoutes() => [
         transitionDuration: const Duration(milliseconds: 500),
       ),
     ];
-
-// class MyMiddelware extends GetMiddleware {
-// }
