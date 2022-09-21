@@ -37,6 +37,7 @@ class MenuController extends GetxController with StateMixin {
   final RxList<menu.Data> _dataSnack = <menu.Data>[].obs;
   RxList<menu.Data> get dataSnack => _dataSnack;
 
+  // Order Data
   final RxList<order.Menu> _orderNewData = <order.Menu>[].obs;
   RxList<order.Menu> get orderNewData => _orderNewData;
 
@@ -127,10 +128,33 @@ class MenuController extends GetxController with StateMixin {
     return getData.obs;
   }
 
+  Rx<String?> getKetLevel(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    String? getData = countAll[0].ketLevel;
+    return getData.obs;
+  }
+
   Rx<int?> getIdLevel(int idMenu) {
     var countAll =
-        _orderNewData.where((element) => element.idMenu == idMenu).toList();
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
     int? getData = countAll[0].level;
+    return getData.obs;
+  }
+
+  Rx<List<String>?> getKetToping(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    List<String>? getData = [];
+    getData = countAll[0].ketToping;
+    return getData.obs;
+  }
+
+  Rx<List<int>?> getIdToping(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    List<int>? getData = [];
+    getData = countAll[0].toping;
     return getData.obs;
   }
 
@@ -139,14 +163,16 @@ class MenuController extends GetxController with StateMixin {
   }
 
   void addCardManager(order.Menu setData, menu.Data dummyData) {
+    int? totalHarga = setData.harga! * setData.jumlah!;
     final newAddItem = order.Menu(
       idMenu: setData.idMenu,
-      harga: setData.harga,
+      harga: totalHarga,
       level: setData.level,
       topping: setData.topping,
       jumlah: setData.jumlah,
     );
     final newDummy = menu.Data(
+      idMenu: dummyData.idMenu,
       foto: dummyData.foto,
       nama: dummyData.nama,
     );
@@ -155,10 +181,11 @@ class MenuController extends GetxController with StateMixin {
       for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
         if (_orderNewData[itemcount].idMenu == newAddItem.idMenu) {
           isFound = true;
-          // _orderNewData[itemcount].toggleDone();
-          // Update Level dan Topping
+          // Update
+          _orderNewData[itemcount].harga = totalHarga;
+          _orderNewData[itemcount].level = setData.level;
           _orderNewData[itemcount].jumlah = setData.jumlah;
-          log("Menu : $isFound");
+          _orderNewData[itemcount].topping = setData.topping;
           for (var i = 0; i < _orderNewData.length; i++) {
             log(_orderNewData[i].toJson().toString());
           }
@@ -183,43 +210,49 @@ class MenuController extends GetxController with StateMixin {
     }
   }
 
-  // void addCardManager(order.Menu setData) {
-  //   final newAddItem = order.Menu(
-  //     idMenu: setData.idMenu,
-  //     harga: setData.harga,
-  //     level: setData.level,
-  //     topping: setData.topping,
-  //     jumlah: setData.jumlah,
-  //   );
-  //   if (_addNewData.isNotEmpty) {
-  //     bool isFound = false;
-  //     for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
-  //       if (_addNewData[itemcount].idMenu == newAddItem.idMenu) {
-  //         isFound = true;
-  //         // _addNewData[itemcount].toggleDone();
-  //         // Update Level dan Topping
-  //         _addNewData[itemcount].jumlah = setData.jumlah;
-  //         log("Menu : $isFound");
-  //         for (var i = 0; i < _addNewData.length; i++) {
-  //           log(_addNewData[i].toJson().toString());
-  //         }
-  //         break;
-  //       }
-  //     }
-  //     if (!isFound) {
-  //       _addNewData.add(newAddItem);
-  //       log(_addNewData.length.toString());
-  //       log("Data Ada : addCard");
-  //       for (var i = 0; i < _addNewData.length; i++) {
-  //         log(_addNewData[i].toJson().toString());
-  //       }
-  //       update();
-  //     }
-  //   } else {
-  //     _addNewData.add(newAddItem);
-  //     log(_addNewData.length.toString());
-  //     log("Data kosong : addCard");
-  //     update();
-  //   }
-  // }
+  void removeCardManager(order.Menu setData) {
+    int? totalHarga = setData.harga! * setData.jumlah!;
+    final newAddItem = order.Menu(
+      idMenu: setData.idMenu,
+      harga: totalHarga,
+      level: setData.level,
+      topping: setData.topping,
+      jumlah: setData.jumlah,
+    );
+    if (_orderNewData.isNotEmpty) {
+      if (setData.jumlah == 0) {
+        for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
+          if (_orderNewData[itemcount].idMenu == newAddItem.idMenu) {
+            // Update
+            _orderNewData
+                .removeWhere((element) => element.idMenu == setData.idMenu);
+            _dummyData
+                .removeWhere((element) => element.idMenu == setData.idMenu);
+            for (var i = 0; i < _orderNewData.length; i++) {
+              log(_orderNewData[i].toJson().toString());
+              log(_dummyData[i].toJson().toString());
+            }
+            log(setData.idMenu.toString());
+            update();
+            break;
+          }
+        }
+      } else {
+        for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
+          if (_orderNewData[itemcount].idMenu == newAddItem.idMenu) {
+            // Update
+            _orderNewData[itemcount].harga = totalHarga;
+            _orderNewData[itemcount].level = setData.level;
+            _orderNewData[itemcount].jumlah = setData.jumlah;
+            _orderNewData[itemcount].topping = setData.topping;
+            for (var i = 0; i < _orderNewData.length; i++) {
+              log(_orderNewData[i].toJson().toString());
+              log(_dummyData[i].toJson().toString());
+            }
+            break;
+          }
+        }
+      }
+    }
+  }
 }

@@ -21,6 +21,7 @@ class DetailMenuController extends GetxController with StateMixin {
   Rx<int> optionToping = 0.obs;
 
   Rx<int> idLevel = 0.obs;
+  RxList<int> idToping = <int>[].obs;
 
   Rx<String> itemLevel = "".obs;
   Rx<String> itemToping = "".obs;
@@ -43,26 +44,65 @@ class DetailMenuController extends GetxController with StateMixin {
 
     var getData = _dataDetailMenu.level?[index - 1];
 
-    var getIdLevel = MenuController.to.dataAllMenu
+    var getDataMenu = MenuController.to.dataAllMenu
         .where((element) => element.idMenu == idMenu)
         .toList();
 
-    getIdLevel[0].level = getData?.idDetail ?? 0;
+    getDataMenu[0].ketLevel = null;
+    getDataMenu[0].level = getData?.idDetail ?? 0;
 
     // var getLevel = _dataDetailMenu.level!
-    //     .where((element) => element.idDetail == getIdLevel[0].level)
+    //     .where((element) => element.idDetail == getDataMenu[0].level)
     //     .toList();
 
     itemLevel.value = getData?.keterangan ?? "";
-    idLevel.value = getIdLevel[0].level;
+    getDataMenu[0].ketLevel = getData?.keterangan ?? "";
+    idLevel.value = getDataMenu[0].level!;
 
-    log("Id level " + getIdLevel[0].level.toString());
+    log("Id level " + getDataMenu[0].level.toString());
+    log("Keterangan level " + getDataMenu[0].ketLevel.toString());
+    update();
     // log("Keterangan " + getLevel[0].keterangan.toString());
   }
 
   void checkOptionToping(int index) {
-    optionToping.value = index;
-    itemToping.value = _dataDetailMenu.topping?[index - 1].keterangan ?? "";
+    var getData = _dataDetailMenu.topping?[index - 1];
+
+    var getDataMenu = MenuController.to.dataAllMenu
+        .where((element) => element.idMenu == idMenu)
+        .toList();
+
+    itemToping.value = getData?.keterangan ?? "";
+    if (getDataMenu[0].toping!.isNotEmpty) {
+      bool isFound = false;
+      for (var i = 0; i < getDataMenu[0].toping!.length; i++) {
+        if (getDataMenu[0].toping?[i] == index) {
+          isFound = true;
+          getDataMenu[0].toping?.remove(index);
+
+          getDataMenu[0].ketToping?.remove(itemToping.value);
+
+          idToping.remove(index);
+        }
+      }
+      if (!isFound) {
+        getDataMenu[0].toping?.add(index);
+
+        getDataMenu[0].ketToping?.add(itemToping.value);
+
+        idToping.add(index);
+      }
+    } else {
+      getDataMenu[0].toping?.add(index);
+
+      getDataMenu[0].ketToping?.add(itemToping.value);
+
+      idToping.add(index);
+    }
+
+    log("Id detail Toping " + getDataMenu[0].toping.toString());
+    log("Keterangan Toping " + getDataMenu[0].ketToping.toString());
+    update();
   }
 
   // int get newDataCount {

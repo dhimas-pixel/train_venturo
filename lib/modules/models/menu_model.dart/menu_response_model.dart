@@ -32,7 +32,10 @@ class Data {
   String? deskripsi;
   String? foto;
   int? status;
-  late int level;
+  int? level;
+  String? ketLevel;
+  List<int>? toping = [];
+  List<String>? ketToping = [];
   late int jumlah;
 
   Data({
@@ -43,7 +46,10 @@ class Data {
     this.deskripsi,
     this.foto,
     this.status,
-    this.level = 0,
+    this.level,
+    this.ketLevel,
+    this.toping,
+    this.ketToping,
     this.jumlah = 0,
   });
 
