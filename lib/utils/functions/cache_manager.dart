@@ -7,9 +7,20 @@ class CacheManager {
     return true;
   }
 
+  static Future<bool> saveId(int? idUser) async {
+    final box = GetStorage();
+    await box.write("idUser", idUser);
+    return true;
+  }
+
   static String? getToken() {
     final box = GetStorage();
     return box.read(CacheManagerKey.token.toString());
+  }
+
+  static int? getidUser() {
+    final box = GetStorage();
+    return box.read("idUser");
   }
 
   static Future<void> removeToken() async {

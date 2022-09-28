@@ -15,6 +15,9 @@ class DetailMenuController extends GetxController with StateMixin {
   late detail_menu.Data _dataDetailMenu;
   detail_menu.Data get dataDetailMenu => _dataDetailMenu;
 
+  // final RxList<detail_menu.Level> _dataLevel = <detail_menu.Level>[].obs;
+  // RxList<detail_menu.Level> get dataLevel => _dataLevel;
+
   int idMenu = Get.arguments;
 
   Rx<int> optionLevel = 0.obs;
@@ -39,25 +42,32 @@ class DetailMenuController extends GetxController with StateMixin {
     change(null, status: RxStatus.success());
   }
 
+  // Rx<int?> getIdLevel(int idMenu) {
+  //   var countAll = _dataDetailMenu.level
+  //       ?.where((element) => element.idDetail == idMenu)
+  //       .toList();
+  //   int? getData = countAll![0].idDetail;
+  //   log("Anjing" + getData.toString());
+  //   return getData.obs;
+  // }
+
   void checkOptionLevel(int index, int idMenu) {
     optionLevel.value = index;
-
     var getData = _dataDetailMenu.level?[index - 1];
 
     var getDataMenu = MenuController.to.dataAllMenu
         .where((element) => element.idMenu == idMenu)
         .toList();
 
-    getDataMenu[0].ketLevel = null;
+    // getDataMenu[0].ketLevel = null;
+    // getDataMenu[0].level = 0;
+    // MenuController.to.getIdLevel(idMenu).value = 0;
+
+    // itemLevel.value = getData?.keterangan ?? "";
+    // idLevel.value = getDataMenu[0].level!;
+
     getDataMenu[0].level = getData?.idDetail ?? 0;
-
-    // var getLevel = _dataDetailMenu.level!
-    //     .where((element) => element.idDetail == getDataMenu[0].level)
-    //     .toList();
-
-    itemLevel.value = getData?.keterangan ?? "";
     getDataMenu[0].ketLevel = getData?.keterangan ?? "";
-    idLevel.value = getDataMenu[0].level!;
 
     log("Id level " + getDataMenu[0].level.toString());
     log("Keterangan level " + getDataMenu[0].ketLevel.toString());

@@ -32,7 +32,12 @@ class Order {
   int? potongan;
   int? totalBayar;
 
-  Order({this.idUser, this.idVoucher, this.potongan, this.totalBayar});
+  Order({
+    this.idUser,
+    this.idVoucher,
+    this.potongan = 0,
+    this.totalBayar = 0,
+  });
 
   Order.fromJson(Map<String, dynamic> json) {
     idUser = json['id_user'];

@@ -50,6 +50,9 @@ dependencies:
   flutter_conditional_rendering: ^2.0.0
   badges: ^2.0.3
   flutter_multi_select_items: ^0.4.2
+  intl: ^0.17.0
+  pin_code_fields: ^7.4.0
+  local_auth: ^2.1.2
 
 dev_dependencies:
   flutter_test:

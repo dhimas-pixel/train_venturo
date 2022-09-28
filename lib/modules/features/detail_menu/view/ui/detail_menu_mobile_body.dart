@@ -21,7 +21,6 @@ import '../../../../../constant/core/assets_const/assets_const.dart';
 import '../../../../../shared/customs/primary_text_style.dart';
 import '../../../../../shared/customs/small_button.dart';
 import '../../../../../shared/widgets/scroll_behaviour.dart';
-import '../../../menu/view/components/com_helper.dart';
 import '../components/card_detail_menu.dart';
 import '../components/choose_item.dart';
 
@@ -356,10 +355,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                                           i]
                                                                       .keterangan ??
                                                                   "",
-                                                              // selected: controller
-                                                              //     .dataDetailMenu
-                                                              //     .topping![i]
-                                                              //     .isSelected!,
+                                                              selected: true,
                                                             )
                                                           ],
                                                           onChange:
