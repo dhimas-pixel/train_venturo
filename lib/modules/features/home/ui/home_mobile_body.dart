@@ -3,6 +3,7 @@ import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart
 import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/config/themes/color.dart';
+import 'package:train_venturo/modules/features/history/view/ui/history_view.dart';
 import 'package:train_venturo/modules/features/profile/ui/profile_view.dart';
 import 'package:badges/badges.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
@@ -24,9 +25,7 @@ class _HomeMobileBodyState extends State<HomeMobileBody> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     MenuView(),
-    Text(
-      'Index 1: Business',
-    ),
+    HistoryView(),
     ProfileView(),
   ];
 

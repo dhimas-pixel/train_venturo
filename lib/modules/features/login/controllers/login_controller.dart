@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:train_venturo/modules/features/login/repository/login_service.dart';
@@ -27,6 +26,7 @@ class LoginController extends GetxController {
       if (response!.data != null) {
         isLogged.value = true;
         await CacheManager.saveToken(response.data!.token);
+        await CacheManager.saveId(response.data!.user!.idUser);
       }
       return response;
     } on DioError catch (e) {
@@ -40,6 +40,7 @@ class LoginController extends GetxController {
       if (response!.data != null) {
         isLogged.value = true;
         await CacheManager.saveToken(response.data!.token);
+        await CacheManager.saveId(response.data!.user!.idUser);
       }
       return response;
     } on DioError catch (e) {

@@ -142,6 +142,13 @@ class MenuController extends GetxController with StateMixin {
     return getData.obs;
   }
 
+  Rx<int?> getHarga(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    int? getData = countAll[0].harga;
+    return getData.obs;
+  }
+
   Rx<List<String>?> getKetToping(int idMenu) {
     var countAll =
         _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
