@@ -6,9 +6,11 @@ import '../../../../../config/themes/color.dart';
 
 class AppBarPrimary extends StatelessWidget implements PreferredSizeWidget {
   final String name;
+  final VoidCallback back;
   const AppBarPrimary({
     Key? key,
     required this.name,
+    required this.back,
   }) : super(key: key);
 
   @override
@@ -18,9 +20,7 @@ class AppBarPrimary extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        onPressed: () {
-          Get.back();
-        },
+        onPressed: back,
         icon: const Icon(
           Icons.arrow_back_ios_rounded,
           color: kBlackSecondaryColor,

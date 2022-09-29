@@ -32,7 +32,12 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarPrimary(name: "Detail Menu"),
+      appBar: AppBarPrimary(
+        name: "Detail Menu",
+        back: () {
+          Get.back();
+        },
+      ),
       body: SafeArea(
         child: ScrollConfiguration(
           behavior: MyBehavior(),

@@ -33,7 +33,12 @@ class DetailVoucherView extends GetView<VoucherController> {
         DateFormat('dd/MM/yyyy').format(convertlastDate).toString();
 
     return Scaffold(
-      appBar: const AppBarPrimary(name: "Detail Voucher"),
+      appBar: AppBarPrimary(
+        name: "Detail Voucher",
+        back: () {
+          Get.back();
+        },
+      ),
       body: SafeArea(
         child: Stack(
           children: [

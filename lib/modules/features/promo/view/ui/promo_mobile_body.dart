@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
 import 'package:train_venturo/shared/customs/appbar_primary.dart';
@@ -19,8 +20,11 @@ class PromoMobileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarPrimary(
+      appBar: AppBarPrimary(
         name: 'Promo',
+        back: () {
+          Get.back();
+        },
       ),
       body: SafeArea(
         child: Container(

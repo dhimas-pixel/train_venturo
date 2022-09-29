@@ -15,7 +15,12 @@ class VoucherView extends GetView<VoucherController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarPrimary(name: "Pilih Voucher"),
+      appBar: AppBarPrimary(
+        name: "Pilih Voucher",
+        back: () {
+          Get.back();
+        },
+      ),
       body: SafeArea(
         child: controller.obx(
           (_) => Stack(

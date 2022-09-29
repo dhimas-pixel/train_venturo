@@ -11,6 +11,7 @@ class BaseUrl {
   static const voucherAllUrl = '${_baseUrl}voucher/all';
   static const voucherIdUserUrl = '${_baseUrl}voucher/user/';
   static const orderAddUrl = '${_baseUrl}order/add';
+  static const orderDetailUrl = '${_baseUrl}order/detail/';
 
   static final dio = Dio();
 }

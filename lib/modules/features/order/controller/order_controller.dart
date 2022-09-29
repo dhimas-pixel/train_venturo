@@ -63,20 +63,22 @@ class OrderController extends GetxController {
     super.dispose();
   }
 
-  // checkPin() async {
-  //   if (pinController.text == userBox.values.first.pin) {
-  //     // Get.back(closeOverlays: true);
-  //     Get.close(2);
-  //     isLoading = true.obs;
-  //     update();
-  //     await checkout();
-  //     isLoading = false.obs;
+  checkPin(BuildContext context) async {
+    if (pinController.text == "111111") {
+      // Get.back(closeOverlays: true);
+      Get.close(1);
+      isLoading = true.obs;
+      loadData(context);
+      update();
+      await checkout();
 
-  //     update();
-  //   } else {
-  //     errorController.add(ErrorAnimationType.shake);
-  //   }
-  // }
+      isLoading = false.obs;
+      Get.back();
+    } else {
+      pinController.clear();
+      errorController.add(ErrorAnimationType.shake);
+    }
+  }
 
   Future<void> authenticateWithBiometrics(BuildContext context) async {
     bool authenticated = false;

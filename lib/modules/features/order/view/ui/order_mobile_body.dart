@@ -12,17 +12,16 @@ import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
 import 'package:train_venturo/modules/features/menu/view/components/card_menu.dart';
 import 'package:train_venturo/modules/features/order/controller/order_controller.dart';
+import 'package:train_venturo/modules/features/tracking/view/ui/tracking_view.dart';
 import 'package:train_venturo/modules/features/voucher/controllers/voucher_controller.dart';
 import 'package:train_venturo/shared/customs/primary_button.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
-import '../../../../../main.dart';
 import '../../../../../shared/customs/appbar_primary.dart';
 import '../../../../models/menu_model.dart/menu_response_model.dart';
 import '../../../../models/order_model.dart/order_request_model.dart';
-import '../../../login/controllers/login_controller.dart';
 import '../../../menu/view/components/com_helper.dart';
-import '../../../menu/view/ui/menu_view.dart';
+import '../../../tracking/controllers/detail_pesanan_controller.dart';
 
 class OrderMobileBody extends GetView<OrderController> {
   const OrderMobileBody({Key? key}) : super(key: key);
@@ -31,7 +30,12 @@ class OrderMobileBody extends GetView<OrderController> {
   Widget build(BuildContext context) {
     Get.put(VoucherController());
     return Scaffold(
-      appBar: const AppBarPrimary(name: "Pesanan"),
+      appBar: AppBarPrimary(
+        name: "Pesanan",
+        back: () {
+          Get.back();
+        },
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -427,38 +431,35 @@ class OrderMobileBody extends GetView<OrderController> {
                           padding: EdgeInsets.symmetric(horizontal: 25.0),
                           child: Divider(),
                         ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 25.0, vertical: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: const [
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Icon(
-                                        Icons.payments_outlined,
-                                        size: 28,
-                                        color: kSecondaryColor,
-                                      ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25.0, vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Icon(
+                                      Icons.payments_outlined,
+                                      size: 28,
+                                      color: kSecondaryColor,
                                     ),
-                                    PrimaryTextStyle(
-                                      size: 18,
-                                      content: "Pembayaran",
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ],
-                                ),
-                                const PrimaryTextStyle(
-                                  size: 14,
-                                  content: "Paylater",
-                                ),
-                              ],
-                            ),
+                                  ),
+                                  PrimaryTextStyle(
+                                    size: 18,
+                                    content: "Pembayaran",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ],
+                              ),
+                              const PrimaryTextStyle(
+                                size: 14,
+                                content: "Paylater",
+                              ),
+                            ],
                           ),
                         ),
                         Container(
@@ -580,12 +581,10 @@ class OrderMobileBody extends GetView<OrderController> {
                   fieldWidth: 35,
                 ),
                 onCompleted: (v) async {
-                  // await value.checkPin();
-                  // if (value.isSuccess.isTrue) {
-                  //   if (value.idOfNewOrder != 0) {
-                  //     showOrderSuccessDialog(value.idOfNewOrder);
-                  //   }
-                  // }
+                  await value.checkPin(context);
+                  if (value.idOfNewOrder != 0) {
+                    showOrderSuccessDialog(value.idOfNewOrder);
+                  }
                 },
                 onChanged: (String data) {
                   // value.pinController.text = data;
@@ -599,7 +598,6 @@ class OrderMobileBody extends GetView<OrderController> {
   }
 
   showDialogIdentify(BuildContext context, OrderController value) {
-    // Get.delete<CartController>();
     return showDialog(
       context: context,
       useRootNavigator: false,
@@ -631,7 +629,7 @@ class OrderMobileBody extends GetView<OrderController> {
                     log("Finger Print");
                     await value.authenticateWithBiometrics(context);
                     if (value.isLoading.isFalse && value.idOfNewOrder != 0) {
-                      showOrderSuccessDialog(value.idOfNewOrder, context);
+                      showOrderSuccessDialog(value.idOfNewOrder);
                     }
                   },
                   child: const Icon(
@@ -695,7 +693,7 @@ class OrderMobileBody extends GetView<OrderController> {
     );
   }
 
-  void showOrderSuccessDialog(int id, BuildContext context) {
+  void showOrderSuccessDialog(int id) {
     AlertDialog orderSuccessDialog = AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -737,18 +735,14 @@ class OrderMobileBody extends GetView<OrderController> {
           Container(
             margin: const EdgeInsets.only(top: 16, bottom: 8),
             child: ElevatedButton(
-              onPressed: () async {
-                // Get.to(PesananTrackingView(id: id, fromOrder: false,));
-                // RestartWidget.restartApp(context);
-                // final menuCon = Get.put(MenuController());
-                // menuCon.getAllMenu();
-                await Get.deleteAll(force: true);
-                // Phoenix.rebirth(Get.context!);
-                // Get.reset();
-                Get.put(LoginController());
-                Get.put(MenuController());
-                Get.toNamed(AppRoutes.homeView);
-                // loginController.checkLoginStatus();
+              onPressed: () {
+                Get.put(DetailPesananController(idOrder: id));
+                Get.to(
+                  () => TrackingView(
+                    id: id,
+                    fromOrder: false,
+                  ),
+                );
               },
               child: const Text(
                 "Oke",
