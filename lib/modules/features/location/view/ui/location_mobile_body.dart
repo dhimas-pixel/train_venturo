@@ -24,7 +24,7 @@ class _LocationMobileBodyState extends State<LocationMobileBody> {
   final getState = Get.put(LocationController());
   @override
   void didChangeDependencies() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getState.getlocation();
     });
     super.didChangeDependencies();

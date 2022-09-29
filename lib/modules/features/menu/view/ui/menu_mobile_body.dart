@@ -13,12 +13,17 @@ import 'package:train_venturo/modules/features/promo/view/ui/promo_view.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 import 'package:train_venturo/shared/widgets/scroll_behaviour.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
+import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+    as menu;
+import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+    as order;
 
 import '../../../../../config/routes/name_routes.dart';
 import '../../../../../shared/customs/card_promo.dart';
 import '../components/app_bar_home.dart';
 import '../components/all_menu.dart';
 import '../components/card_menu.dart';
+import '../components/com_helper.dart';
 
 class MenuMobileBody extends GetView<MenuController> {
   const MenuMobileBody({Key? key}) : super(key: key);
@@ -262,11 +267,119 @@ class MenuMobileBody extends GetView<MenuController> {
                                   controller.increatment(
                                       controller.foundMenu.value[i].idMenu ??
                                           0);
+                                  if (controller
+                                          .getCount(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value !=
+                                      0) {
+                                    final setData = order.Menu(
+                                      idMenu: controller
+                                              .foundMenu.value[i].idMenu ??
+                                          0,
+                                      harga:
+                                          controller.foundMenu.value[i].harga ??
+                                              0,
+                                      level: MenuController.to
+                                          .getIdLevel(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value,
+                                      topping: MenuController.to
+                                          .getIdToping(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value,
+                                      jumlah: controller
+                                          .getCount(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value,
+                                    );
+                                    final setDummy = menu.Data(
+                                      idMenu: controller
+                                              .foundMenu.value[i].idMenu ??
+                                          0,
+                                      foto:
+                                          controller.foundMenu.value[i].foto ??
+                                              "",
+                                      nama:
+                                          controller.foundMenu.value[i].nama ??
+                                              "",
+                                    );
+                                    controller.addCardManager(
+                                        setData, setDummy);
+                                  }
                                 },
                                 decreament: () {
-                                  controller.decreatment(
-                                      controller.foundMenu.value[i].idMenu ??
-                                          0);
+                                  if (controller
+                                          .getCount(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value ==
+                                      1) {
+                                    primaryAlert(
+                                      context,
+                                      () {
+                                        controller.decreatment(controller
+                                                .foundMenu.value[i].idMenu ??
+                                            0);
+                                        final setData = order.Menu(
+                                          idMenu: controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0,
+                                          harga: controller
+                                                  .foundMenu.value[i].harga ??
+                                              0,
+                                          level: MenuController.to
+                                              .getIdLevel(controller.foundMenu
+                                                      .value[i].idMenu ??
+                                                  0)
+                                              .value,
+                                          topping: MenuController.to
+                                              .getIdToping(controller.foundMenu
+                                                      .value[i].idMenu ??
+                                                  0)
+                                              .value,
+                                          jumlah: controller
+                                              .getCount(controller.foundMenu
+                                                      .value[i].idMenu ??
+                                                  0)
+                                              .value,
+                                        );
+                                        controller.removeCardManager(setData);
+                                        Get.back();
+                                      },
+                                    );
+                                  } else {
+                                    controller.decreatment(
+                                        controller.foundMenu.value[i].idMenu ??
+                                            0);
+                                    final setData = order.Menu(
+                                      idMenu: controller
+                                              .foundMenu.value[i].idMenu ??
+                                          0,
+                                      harga:
+                                          controller.foundMenu.value[i].harga ??
+                                              0,
+                                      level: MenuController.to
+                                          .getIdLevel(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value,
+                                      topping: MenuController.to
+                                          .getIdToping(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value,
+                                      jumlah: controller
+                                          .getCount(controller
+                                                  .foundMenu.value[i].idMenu ??
+                                              0)
+                                          .value,
+                                    );
+                                    controller.removeCardManager(setData);
+                                  }
                                 },
                               ),
                             );

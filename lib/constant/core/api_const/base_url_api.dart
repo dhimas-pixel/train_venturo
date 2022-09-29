@@ -7,6 +7,10 @@ class BaseUrl {
   static const allMenuUrl = '${_baseUrl}menu/all';
   static const kategoriMenuUrl = '${_baseUrl}menu/kategori/';
   static const detailMenuUrl = '${_baseUrl}menu/detail/';
+  static const diskonIdUserUrl = '${_baseUrl}diskon/user/';
+  static const voucherAllUrl = '${_baseUrl}voucher/all';
+  static const voucherIdUserUrl = '${_baseUrl}voucher/user/';
+  static const orderAddUrl = '${_baseUrl}order/add';
 
   static final dio = Dio();
 }

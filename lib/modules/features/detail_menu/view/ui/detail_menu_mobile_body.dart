@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
+import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/detail_menu/controllers/detail_menu_controller.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
+import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+    as menu;
+import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+    as order;
 import 'package:train_venturo/shared/customs/appbar_primary.dart';
 import 'package:train_venturo/shared/customs/primary_button.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
@@ -179,9 +186,13 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                       return Obx(
                                                         () => ChooseItem(
                                                           onTap: () {
-                                                            controller
-                                                                .checkOptionLevel(
-                                                                    i + 1);
+                                                            controller.checkOptionLevel(
+                                                                i + 1,
+                                                                controller
+                                                                        .dataDetailMenu
+                                                                        .menu
+                                                                        ?.idMenu ??
+                                                                    0);
                                                           },
                                                           item: controller
                                                                   .dataDetailMenu
@@ -207,12 +218,28 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                   svgUrl:
                                                       '${AssetsUrl.svgUrl}ic_level.svg',
                                                   name: 'Level',
-                                                  content: controller.itemLevel
+                                                  content: MenuController.to
+                                                              .getKetLevel(controller
+                                                                      .dataDetailMenu
+                                                                      .menu
+                                                                      ?.idMenu ??
+                                                                  0)
                                                               .value ==
-                                                          ""
-                                                      ? 'Pilih Level'
-                                                      : controller
-                                                          .itemLevel.value,
+                                                          null
+                                                      ? controller.itemLevel
+                                                                  .value ==
+                                                              ""
+                                                          ? 'Pilih Level'
+                                                          : controller
+                                                              .itemLevel.value
+                                                      : MenuController.to
+                                                              .getKetLevel(controller
+                                                                      .dataDetailMenu
+                                                                      .menu
+                                                                      ?.idMenu ??
+                                                                  0)
+                                                              .value ??
+                                                          "",
                                                 ),
                                               ),
                                             ),
@@ -252,22 +279,103 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                     scrollDirection:
                                                         Axis.horizontal,
                                                     itemBuilder: (ctx, i) {
-                                                      return Obx(
-                                                        () => ChooseItem(
-                                                          onTap: () {
-                                                            controller
-                                                                .checkOptionToping(
-                                                                    i + 1);
-                                                          },
-                                                          item: controller
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(right: 6),
+                                                        child:
+                                                            MultiSelectContainer(
+                                                          itemsDecoration:
+                                                              MultiSelectDecorations(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: Border.all(
+                                                                  color:
+                                                                      kSecondaryColor),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                            ),
+                                                            selectedDecoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  kSecondaryColor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                            ),
+                                                          ),
+                                                          textStyles:
+                                                              const MultiSelectTextStyles(
+                                                            textStyle:
+                                                                TextStyle(
+                                                              color:
+                                                                  kSecondaryColor,
+                                                              fontFamily:
+                                                                  'Montserrat',
+                                                            ),
+                                                          ),
+                                                          suffix:
+                                                              MultiSelectSuffix(
+                                                            selectedSuffix:
+                                                                const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              child: Icon(
+                                                                Icons.check,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 14,
+                                                              ),
+                                                            ),
+                                                            disabledSuffix:
+                                                                const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .do_disturb_alt_sharp,
+                                                                size: 14,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          items: [
+                                                            MultiSelectCard(
+                                                              value: controller
                                                                   .dataDetailMenu
-                                                                  .topping![i]
-                                                                  .keterangan ??
-                                                              "",
-                                                          selected: i + 1 ==
-                                                              controller
-                                                                  .optionToping
-                                                                  .value,
+                                                                  .topping?[i]
+                                                                  .idDetail,
+                                                              label: controller
+                                                                      .dataDetailMenu
+                                                                      .topping![
+                                                                          i]
+                                                                      .keterangan ??
+                                                                  "",
+                                                              selected: true,
+                                                            )
+                                                          ],
+                                                          onChange:
+                                                              (allSelectedItems,
+                                                                  selectedItem) {
+                                                            log(allSelectedItems
+                                                                .toString());
+                                                            controller.checkOptionToping(
+                                                                int.parse(
+                                                                    selectedItem
+                                                                        .toString()));
+                                                            // controller
+                                                            //         .dataDetailMenu
+                                                            //         .topping![i]
+                                                            //         .isSelected =
+                                                            //     !controller
+                                                            //         .dataDetailMenu
+                                                            //         .topping![i]
+                                                            //         .isSelected!;
+                                                          },
                                                         ),
                                                       );
                                                     },
@@ -283,12 +391,25 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                   svgUrl:
                                                       '${AssetsUrl.svgUrl}ic_toping.svg',
                                                   name: 'Toping',
-                                                  content: controller.itemToping
-                                                              .value ==
-                                                          ""
-                                                      ? 'Pilih Toping'
-                                                      : controller
-                                                          .itemToping.value,
+                                                  content: MenuController.to
+                                                          .getKetToping(controller
+                                                                  .dataDetailMenu
+                                                                  .menu
+                                                                  ?.idMenu ??
+                                                              0)
+                                                          .value!
+                                                          .isEmpty
+                                                      ? "Pilih Toping"
+                                                      : MenuController.to
+                                                          .getKetToping(controller
+                                                                  .dataDetailMenu
+                                                                  .menu
+                                                                  ?.idMenu ??
+                                                              0)
+                                                          .value
+                                                          .toString()
+                                                          .replaceAll('[', '')
+                                                          .replaceAll(']', ''),
                                                 ),
                                               ),
                                             ),
@@ -363,14 +484,92 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                           ),
                                         ],
                                       ),
-                                      PrimaryButton(
-                                        text: "Tambahkan Ke Pesanan",
-                                        press: () {},
-                                        color: kSecondaryColor,
-                                        width: widthSized(context),
-                                        fontSize: 16,
-                                        textColor: kWhiteColor,
-                                        fontWeight: FontWeight.w600,
+                                      GetBuilder<MenuController>(
+                                        init: MenuController(),
+                                        initState: (_) {},
+                                        builder: (state) {
+                                          return PrimaryButton(
+                                            text: "Tambahkan Ke Pesanan",
+                                            press: () {
+                                              if (state
+                                                      .getCount(controller
+                                                              .dataDetailMenu
+                                                              .menu
+                                                              ?.idMenu ??
+                                                          0)
+                                                      .value !=
+                                                  0) {
+                                                final setData = order.Menu(
+                                                  idMenu: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.idMenu ??
+                                                      0,
+                                                  harga: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.harga ??
+                                                      0,
+                                                  level: state
+                                                      .getIdLevel(controller
+                                                              .dataDetailMenu
+                                                              .menu
+                                                              ?.idMenu ??
+                                                          0)
+                                                      .value,
+                                                  topping: state
+                                                      .getIdToping(controller
+                                                              .dataDetailMenu
+                                                              .menu
+                                                              ?.idMenu ??
+                                                          0)
+                                                      .value,
+                                                  jumlah: state
+                                                      .getCount(controller
+                                                              .dataDetailMenu
+                                                              .menu
+                                                              ?.idMenu ??
+                                                          0)
+                                                      .value,
+                                                );
+                                                final setDummy = menu.Data(
+                                                  idMenu: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.idMenu ??
+                                                      0,
+                                                  foto: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.foto ??
+                                                      "",
+                                                  nama: controller
+                                                          .dataDetailMenu
+                                                          .menu
+                                                          ?.nama ??
+                                                      "",
+                                                );
+                                                state.addCardManager(
+                                                    setData, setDummy);
+                                                Get.back();
+                                              }
+                                            },
+                                            color: state
+                                                        .getCount(controller
+                                                                .dataDetailMenu
+                                                                .menu
+                                                                ?.idMenu ??
+                                                            0)
+                                                        .value ==
+                                                    0
+                                                ? kGreyColor
+                                                : kSecondaryColor,
+                                            width: widthSized(context),
+                                            fontSize: 16,
+                                            textColor: kWhiteColor,
+                                            fontWeight: FontWeight.w600,
+                                          );
+                                        },
                                       )
                                     ],
                                   ),
@@ -387,6 +586,31 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                   onTap: () {
                                     MenuController.to
                                         .decreatment(Get.arguments);
+                                    final setData = order.Menu(
+                                      idMenu: controller
+                                              .dataDetailMenu.menu?.idMenu ??
+                                          0,
+                                      harga: controller
+                                              .dataDetailMenu.menu?.harga ??
+                                          0,
+                                      level: MenuController.to
+                                          .getIdLevel(controller.dataDetailMenu
+                                                  .menu?.idMenu ??
+                                              0)
+                                          .value,
+                                      topping: MenuController.to
+                                          .getIdToping(controller.dataDetailMenu
+                                                  .menu?.idMenu ??
+                                              0)
+                                          .value,
+                                      jumlah: MenuController.to
+                                          .getCount(controller.dataDetailMenu
+                                                  .menu?.idMenu ??
+                                              0)
+                                          .value,
+                                    );
+                                    MenuController.to
+                                        .removeCardManager(setData);
                                   },
                                   icon: Icons.indeterminate_check_box_outlined,
                                 ),
@@ -399,7 +623,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                           .getCount(controller.dataDetailMenu
                                                   .menu?.idMenu ??
                                               0)
-                                          .value,
+                                          .toString(),
                                       color: kBlackPrimaryColor,
                                     );
                                   },
@@ -408,6 +632,53 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                   onTap: () {
                                     MenuController.to
                                         .increatment(Get.arguments);
+                                    if (MenuController.to
+                                            .getCount(controller.dataDetailMenu
+                                                    .menu?.idMenu ??
+                                                0)
+                                            .value !=
+                                        0) {
+                                      final setData = order.Menu(
+                                        idMenu: controller
+                                                .dataDetailMenu.menu?.idMenu ??
+                                            0,
+                                        harga: controller
+                                                .dataDetailMenu.menu?.harga ??
+                                            0,
+                                        level: MenuController.to
+                                            .getIdLevel(controller
+                                                    .dataDetailMenu
+                                                    .menu
+                                                    ?.idMenu ??
+                                                0)
+                                            .value,
+                                        topping: MenuController.to
+                                            .getIdToping(controller
+                                                    .dataDetailMenu
+                                                    .menu
+                                                    ?.idMenu ??
+                                                0)
+                                            .value,
+                                        jumlah: MenuController.to
+                                            .getCount(controller.dataDetailMenu
+                                                    .menu?.idMenu ??
+                                                0)
+                                            .value,
+                                      );
+                                      final setDummy = menu.Data(
+                                        idMenu: controller
+                                                .dataDetailMenu.menu?.idMenu ??
+                                            0,
+                                        foto: controller
+                                                .dataDetailMenu.menu?.foto ??
+                                            "",
+                                        nama: controller
+                                                .dataDetailMenu.menu?.nama ??
+                                            "",
+                                      );
+                                      MenuController.to
+                                          .addCardManager(setData, setDummy);
+                                    }
                                   },
                                   icon: Icons.add_box_rounded,
                                 ),

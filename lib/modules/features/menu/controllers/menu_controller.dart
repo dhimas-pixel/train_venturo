@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/menu/repository/menu_service.dart';
 import 'package:train_venturo/modules/features/menu/repository/promo_service.dart';
+import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+    as order;
 import 'package:train_venturo/modules/models/promo_model.dart/promo_response_model.dart'
     as promo;
 
@@ -32,6 +36,13 @@ class MenuController extends GetxController with StateMixin {
 
   final RxList<menu.Data> _dataSnack = <menu.Data>[].obs;
   RxList<menu.Data> get dataSnack => _dataSnack;
+
+  // Order Data
+  final RxList<order.Menu> _orderNewData = <order.Menu>[].obs;
+  RxList<order.Menu> get orderNewData => _orderNewData;
+
+  final RxList<menu.Data> _dummyData = <menu.Data>[].obs;
+  RxList<menu.Data> get dummyData => _dummyData;
 
   Future<void> getPromo() async {
     change(null, status: RxStatus.loading());
@@ -67,32 +78,10 @@ class MenuController extends GetxController with StateMixin {
     change(null, status: RxStatus.success());
   }
 
-  // void getMenuCategory(String where) async {
-  //   change(null, status: RxStatus.loading());
-  //   try {
-  //     final response = await menuService.getMenuCategory(where);
-  //     if (where == "makanan") {
-  //       _dataFood.value = response!.data!;
-  //     } else if (where == "minuman") {
-  //       _dataDrink.value = response!.data!;
-  //     } else {
-  //       _dataSnack.value = response!.data!;
-  //     }
-  //   } on DioError {
-  //     _dataFood.value = [];
-  //     _dataDrink.value = [];
-  //     _dataSnack.value = [];
-  //   }
-  //   change(null, status: RxStatus.success());
-  // }
-
   @override
   void onInit() {
     getPromo();
     getAllMenu();
-    // getMenuCategory('makanan');
-    // getMenuCategory('minuman');
-    // getMenuCategory('snack');
     foundMenu.value = _dataAllMenu;
     super.onInit();
   }
@@ -132,10 +121,145 @@ class MenuController extends GetxController with StateMixin {
     update();
   }
 
-  Rx<String> getCount(int idMenu) {
+  Rx<int> getCount(int idMenu) {
     var countAll =
         _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
-    String getData = countAll[0].jumlah.toString();
+    int getData = countAll[0].jumlah;
     return getData.obs;
+  }
+
+  Rx<String?> getKetLevel(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    String? getData = countAll[0].ketLevel;
+    return getData.obs;
+  }
+
+  Rx<int?> getIdLevel(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    int? getData = countAll[0].level;
+    return getData.obs;
+  }
+
+  Rx<int?> getHarga(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    int? getData = countAll[0].harga;
+    return getData.obs;
+  }
+
+  Rx<List<String>?> getKetToping(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    List<String>? getData = [];
+    getData = countAll[0].ketToping;
+    return getData.obs;
+  }
+
+  Rx<List<int>?> getIdToping(int idMenu) {
+    var countAll =
+        _dataAllMenu.where((element) => element.idMenu == idMenu).toList();
+    List<int>? getData = [];
+    getData = countAll[0].toping;
+    return getData.obs;
+  }
+
+  int get newDataCount {
+    return _orderNewData.length;
+  }
+
+  void addCardManager(order.Menu setData, menu.Data dummyData) {
+    int? totalHarga = setData.harga! * setData.jumlah!;
+    final newAddItem = order.Menu(
+      idMenu: setData.idMenu,
+      harga: totalHarga,
+      level: setData.level,
+      topping: setData.topping,
+      jumlah: setData.jumlah,
+    );
+    final newDummy = menu.Data(
+      idMenu: dummyData.idMenu,
+      foto: dummyData.foto,
+      nama: dummyData.nama,
+    );
+    if (_orderNewData.isNotEmpty) {
+      bool isFound = false;
+      for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
+        if (_orderNewData[itemcount].idMenu == newAddItem.idMenu) {
+          isFound = true;
+          // Update
+          _orderNewData[itemcount].harga = totalHarga;
+          _orderNewData[itemcount].level = setData.level;
+          _orderNewData[itemcount].jumlah = setData.jumlah;
+          _orderNewData[itemcount].topping = setData.topping;
+          for (var i = 0; i < _orderNewData.length; i++) {
+            log(_orderNewData[i].toJson().toString());
+          }
+          break;
+        }
+      }
+      if (!isFound) {
+        _orderNewData.add(newAddItem);
+        _dummyData.add(newDummy);
+        log("Data Ada : addCard");
+        for (var i = 0; i < _orderNewData.length; i++) {
+          log("Order" + _orderNewData[i].toJson().toString());
+          log("Dummy" + _dummyData[i].toJson().toString());
+        }
+        update();
+      }
+    } else {
+      _orderNewData.add(newAddItem);
+      _dummyData.add(newDummy);
+      log("Data kosong : addCard");
+      update();
+    }
+  }
+
+  void removeCardManager(order.Menu setData) {
+    int? totalHarga = setData.harga! * setData.jumlah!;
+    final newAddItem = order.Menu(
+      idMenu: setData.idMenu,
+      harga: totalHarga,
+      level: setData.level,
+      topping: setData.topping,
+      jumlah: setData.jumlah,
+    );
+    if (_orderNewData.isNotEmpty) {
+      if (setData.jumlah == 0) {
+        for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
+          if (_orderNewData[itemcount].idMenu == newAddItem.idMenu) {
+            // Update
+            _orderNewData
+                .removeWhere((element) => element.idMenu == setData.idMenu);
+            _dummyData
+                .removeWhere((element) => element.idMenu == setData.idMenu);
+            for (var i = 0; i < _orderNewData.length; i++) {
+              log(_orderNewData[i].toJson().toString());
+              log(_dummyData[i].toJson().toString());
+            }
+            log(setData.idMenu.toString());
+            update();
+            break;
+          }
+        }
+      } else {
+        for (int itemcount = 0; itemcount < newDataCount; itemcount++) {
+          if (_orderNewData[itemcount].idMenu == newAddItem.idMenu) {
+            // Update
+            _orderNewData[itemcount].harga = totalHarga;
+            _orderNewData[itemcount].level = setData.level;
+            _orderNewData[itemcount].jumlah = setData.jumlah;
+            _orderNewData[itemcount].topping = setData.topping;
+            for (var i = 0; i < _orderNewData.length; i++) {
+              log(_orderNewData[i].toJson().toString());
+              log(_dummyData[i].toJson().toString());
+            }
+            break;
+          }
+        }
+      }
+    }
   }
 }

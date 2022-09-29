@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
-import 'package:train_venturo/modules/features/detail_menu/view/ui/detail_menu_view.dart';
+import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+    as order;
+import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+    as menu;
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
 import 'card_menu.dart';
+import 'com_helper.dart';
 
 class AllMenu extends GetView<MenuController> {
   const AllMenu({Key? key}) : super(key: key);
@@ -35,9 +39,77 @@ class AllMenu extends GetView<MenuController> {
                 quantity: controller.dataAllMenu[i].jumlah,
                 increament: () {
                   controller.increatment(controller.dataAllMenu[i].idMenu ?? 0);
+                  if (controller
+                          .getCount(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value !=
+                      0) {
+                    final setData = order.Menu(
+                      idMenu: controller.dataAllMenu[i].idMenu ?? 0,
+                      harga: controller.dataAllMenu[i].harga ?? 0,
+                      level: MenuController.to
+                          .getIdLevel(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value,
+                      topping: MenuController.to
+                          .getIdToping(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value,
+                      jumlah: controller
+                          .getCount(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value,
+                    );
+                    final setDummy = menu.Data(
+                      idMenu: controller.dataAllMenu[i].idMenu ?? 0,
+                      foto: controller.dataAllMenu[i].foto ?? "",
+                      nama: controller.dataAllMenu[i].nama ?? "",
+                    );
+                    controller.addCardManager(setData, setDummy);
+                  }
                 },
                 decreament: () {
-                  controller.decreatment(controller.dataAllMenu[i].idMenu ?? 0);
+                  if (controller
+                          .getCount(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value ==
+                      1) {
+                    primaryAlert(
+                      context,
+                      () {
+                        controller
+                            .decreatment(controller.dataAllMenu[i].idMenu ?? 0);
+                        final setData = order.Menu(
+                          idMenu: controller.dataAllMenu[i].idMenu ?? 0,
+                          harga: controller.dataAllMenu[i].harga ?? 0,
+                          level: MenuController.to
+                              .getIdLevel(controller.dataAllMenu[i].idMenu ?? 0)
+                              .value,
+                          topping: MenuController.to
+                              .getIdToping(
+                                  controller.dataAllMenu[i].idMenu ?? 0)
+                              .value,
+                          jumlah: controller
+                              .getCount(controller.dataAllMenu[i].idMenu ?? 0)
+                              .value,
+                        );
+                        controller.removeCardManager(setData);
+                        Get.back();
+                      },
+                    );
+                  } else {
+                    controller
+                        .decreatment(controller.dataAllMenu[i].idMenu ?? 0);
+                    final setData = order.Menu(
+                      idMenu: controller.dataAllMenu[i].idMenu ?? 0,
+                      harga: controller.dataAllMenu[i].harga ?? 0,
+                      level: MenuController.to
+                          .getIdLevel(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value,
+                      topping: MenuController.to
+                          .getIdToping(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value,
+                      jumlah: controller
+                          .getCount(controller.dataAllMenu[i].idMenu ?? 0)
+                          .value,
+                    );
+                    controller.removeCardManager(setData);
+                  }
                 },
               ),
             );
