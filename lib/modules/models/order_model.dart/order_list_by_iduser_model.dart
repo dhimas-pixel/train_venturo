@@ -1,15 +1,15 @@
 class OrderListByIdUserResModel {
   int? statusCode;
-  List<Data>? data;
+  List<Order>? data;
 
   OrderListByIdUserResModel({this.statusCode, this.data});
 
   OrderListByIdUserResModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['status_code'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Order>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(Order.fromJson(v));
       });
     }
   }
@@ -24,16 +24,16 @@ class OrderListByIdUserResModel {
   }
 }
 
-class Data {
+class Order {
   int? idOrder;
   String? noStruk;
   String? nama;
   int? totalBayar;
   String? tanggal;
   int? status;
-  List<Menu>? menu;
+  List<Menu>? menu = [];
 
-  Data(
+  Order(
       {this.idOrder,
       this.noStruk,
       this.nama,
@@ -42,7 +42,7 @@ class Data {
       this.status,
       this.menu});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Order.fromJson(Map<String, dynamic> json) {
     idOrder = json['id_order'];
     noStruk = json['no_struk'];
     nama = json['nama'];
