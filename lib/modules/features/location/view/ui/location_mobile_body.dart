@@ -35,6 +35,7 @@ class _LocationMobileBodyState extends State<LocationMobileBody> {
     return SafeArea(
       child: Scaffold(
         body: Background(
+          top: 100,
           child: SizedBox(
             height: heightSized(context) / 1.6,
             child: Column(

@@ -45,6 +45,7 @@ class _ConnectionViewState extends State<ConnectionView> {
     return _connectivityResult == ConnectivityResult.none ||
             _connectivityResult == null
         ? Background(
+            top: 100,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 190),
               child: Column(

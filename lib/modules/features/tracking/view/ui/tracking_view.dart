@@ -3,7 +3,7 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
 import 'package:train_venturo/modules/features/tracking/controllers/detail_pesanan_controller.dart';
-import 'package:train_venturo/modules/features/tracking/view/components/cardOrder.dart';
+import 'package:train_venturo/modules/features/tracking/view/components/card_order.dart';
 import 'package:train_venturo/shared/customs/appbar_primary.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 
@@ -129,7 +129,7 @@ class TrackingView extends GetView<DetailPesananController> {
                                 Conditional.single(
                                   context: context,
                                   conditionBuilder: (context) =>
-                                      state.orderDetail?.order?.idVoucher == 0,
+                                      state.orderDetail?.order?.diskon != 0,
                                   widgetBuilder: (context) => Column(
                                     children: [
                                       const Padding(
@@ -245,7 +245,7 @@ class TrackingView extends GetView<DetailPesananController> {
                                               fallbackBuilder: (context) =>
                                                   const PrimaryTextStyle(
                                                 size: 14,
-                                                content: "Pilih Voucher",
+                                                content: "Tidak ada voucher",
                                               ),
                                             ),
                                           ],
