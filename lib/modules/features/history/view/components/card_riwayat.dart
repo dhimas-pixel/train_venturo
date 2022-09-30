@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:train_venturo/config/themes/color.dart';
-import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 import 'package:train_venturo/modules/models/order_model.dart/order_list_by_iduser_model.dart';
-import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
+import '../../../../../config/themes/color.dart';
+import '../../../../../constant/core/assets_const/assets_const.dart';
+import '../../../../../shared/customs/primary_text_style.dart';
 import '../../../../../utils/functions/common_functions.dart';
 
-class CardHistory extends StatelessWidget {
+class CardRiwayat extends StatelessWidget {
   final Order order;
-  CardHistory({
+  final Function pesanLagi;
+  CardRiwayat({
     Key? key,
     required this.order,
+    required this.pesanLagi,
   }) : super(key: key);
 
   final CommonFunctions commonFunctions = CommonFunctions();
@@ -107,6 +109,62 @@ class CardHistory extends StatelessWidget {
                       )
                     ],
                   ),
+                  Row(
+                    children: [
+                      order.status == 3
+                          ? Row(
+                              children: [
+                                Container(
+                                  width: 90,
+                                  height: 20,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: kSecondaryColor,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.white,
+                                  ),
+                                  child: const Text(
+                                    "Beri Nilai",
+                                    style: TextStyle(
+                                      color: kSecondaryColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      GestureDetector(
+                        onTap: () {
+                          pesanLagi();
+                        },
+                        child: Container(
+                          width: 90,
+                          height: 20,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: kSecondaryColor,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(50),
+                            color: kSecondaryColor,
+                          ),
+                          child: const Text(
+                            "Pesan lagi",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

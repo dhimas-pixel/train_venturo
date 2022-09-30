@@ -13,6 +13,7 @@ class BaseUrl {
   static const orderAddUrl = '${_baseUrl}order/add';
   static const orderDetailUrl = '${_baseUrl}order/detail/';
   static const orderByUserUrl = '${_baseUrl}order/user/';
+  static const orderHistoryUrl = '${_baseUrl}order/history/';
 
   static final dio = Dio();
 }
