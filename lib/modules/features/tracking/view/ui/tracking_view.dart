@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:get/get.dart';
@@ -10,9 +12,8 @@ import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
 import '../../../../../config/routes/name_routes.dart';
 import '../../../../../config/themes/color.dart';
 import '../../../../../constant/core/assets_const/assets_const.dart';
+import '../../../../../main.dart';
 import '../../../../../shared/customs/primary_text_style.dart';
-import '../../../login/controllers/login_controller.dart';
-import '../../../menu/controllers/menu_controller.dart';
 
 class TrackingView extends GetView<DetailPesananController> {
   final int id;
@@ -33,24 +34,20 @@ class TrackingView extends GetView<DetailPesananController> {
             if (fromOrder) {
               Get.back();
             } else {
-              await Get.deleteAll(force: true);
-              Get.put(LoginController());
-              Get.put(MenuController());
-              Get.toNamed(AppRoutes.homeView);
+              RestartWidget.restartApp(context);
+              Get.offAllNamed(AppRoutes.homeView);
             }
             return true;
           },
           child: Scaffold(
             appBar: AppBarPrimary(
-              name: "Pesanan",
+              name: "order".tr,
               back: () async {
                 if (fromOrder) {
                   Get.back();
                 } else {
-                  await Get.deleteAll(force: true);
-                  Get.put(LoginController());
-                  Get.put(MenuController());
-                  Get.toNamed(AppRoutes.homeView);
+                  RestartWidget.restartApp(context);
+                  Get.offAllNamed(AppRoutes.homeView);
                 }
               },
             ),
@@ -112,8 +109,8 @@ class TrackingView extends GetView<DetailPesananController> {
                                     children: [
                                       PrimaryTextStyle(
                                         size: 18,
-                                        content:
-                                            "Total Pesanan (${state.orderDetail?.detail?.length ?? 0} Menu) : ",
+                                        content: "total_order".tr +
+                                            " (${state.orderDetail?.detail?.length ?? 0} Menu) :",
                                         fontWeight: FontWeight.w500,
                                       ),
                                       PrimaryTextStyle(
@@ -147,18 +144,18 @@ class TrackingView extends GetView<DetailPesananController> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Row(
-                                              children: const [
-                                                Icon(
+                                              children: [
+                                                const Icon(
                                                   Icons.discount_outlined,
                                                   size: 28,
                                                   color: kSecondaryColor,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 10,
                                                 ),
                                                 PrimaryTextStyle(
                                                   size: 18,
-                                                  content: "Diskon",
+                                                  content: "discount".tr,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ],
@@ -243,9 +240,9 @@ class TrackingView extends GetView<DetailPesananController> {
                                                 ],
                                               ),
                                               fallbackBuilder: (context) =>
-                                                  const PrimaryTextStyle(
+                                                  PrimaryTextStyle(
                                                 size: 14,
-                                                content: "Tidak ada voucher",
+                                                content: "no_voucher".tr,
                                               ),
                                             ),
                                           ],
@@ -259,40 +256,37 @@ class TrackingView extends GetView<DetailPesananController> {
                                       EdgeInsets.symmetric(horizontal: 25.0),
                                   child: Divider(),
                                 ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25.0, vertical: 12),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: const [
-                                            Icon(
-                                              Icons.payments_outlined,
-                                              size: 28,
-                                              color: kSecondaryColor,
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            PrimaryTextStyle(
-                                              size: 18,
-                                              content: "Pembayaran",
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ],
-                                        ),
-                                        const PrimaryTextStyle(
-                                          size: 14,
-                                          content: "Paylater",
-                                        ),
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25.0, vertical: 12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.payments_outlined,
+                                            size: 28,
+                                            color: kSecondaryColor,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          PrimaryTextStyle(
+                                            size: 18,
+                                            content: "payment".tr,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ],
+                                      ),
+                                      const PrimaryTextStyle(
+                                        size: 14,
+                                        content: "Paylater",
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Column(
@@ -302,33 +296,28 @@ class TrackingView extends GetView<DetailPesananController> {
                                           horizontal: 25.0),
                                       child: Divider(),
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        // Get.to(ChooseVoucherView());
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 25.0, vertical: 12),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const PrimaryTextStyle(
-                                              size: 18,
-                                              content: "Total Pembayaran",
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            PrimaryTextStyle(
-                                              size: 18,
-                                              content:
-                                                  "Rp ${state.orderDetail?.order?.totalBayar ?? 0}",
-                                              fontWeight: FontWeight.bold,
-                                              color: kSecondaryColor,
-                                            ),
-                                          ],
-                                        ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 25.0, vertical: 12),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          PrimaryTextStyle(
+                                            size: 18,
+                                            content: "total_payment".tr,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          PrimaryTextStyle(
+                                            size: 18,
+                                            content:
+                                                "Rp ${state.orderDetail?.order?.totalBayar ?? 0}",
+                                            fontWeight: FontWeight.bold,
+                                            color: kSecondaryColor,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -342,7 +331,7 @@ class TrackingView extends GetView<DetailPesananController> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        // Get.to(ChooseVoucherView());
+                                        log(id.toString());
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -351,10 +340,9 @@ class TrackingView extends GetView<DetailPesananController> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            const PrimaryTextStyle(
+                                            PrimaryTextStyle(
                                               size: 18,
-                                              content:
-                                                  "Pesanan kamu sedang disiapkan",
+                                              content: "order_is_prepared".tr,
                                               fontWeight: FontWeight.w600,
                                             ),
                                             const SizedBox(
@@ -403,10 +391,11 @@ class TrackingView extends GetView<DetailPesananController> {
                                                         ),
                                                       ),
                                                       const SizedBox(height: 4),
-                                                      const PrimaryTextStyle(
+                                                      PrimaryTextStyle(
                                                         size: 12,
                                                         content:
-                                                            "Pesanan diterima",
+                                                            "order_is_accepted"
+                                                                .tr,
                                                         color: kGreyColor,
                                                         textAlign:
                                                             TextAlign.center,
@@ -469,10 +458,11 @@ class TrackingView extends GetView<DetailPesananController> {
                                                         ),
                                                       ),
                                                       const SizedBox(height: 4),
-                                                      const PrimaryTextStyle(
+                                                      PrimaryTextStyle(
                                                         size: 12,
                                                         content:
-                                                            "Silahkan Diambil",
+                                                            "you_can_take_it"
+                                                                .tr,
                                                         color: kGreyColor,
                                                         textAlign:
                                                             TextAlign.center,
@@ -526,10 +516,10 @@ class TrackingView extends GetView<DetailPesananController> {
                                                         ),
                                                       ),
                                                       const SizedBox(height: 4),
-                                                      const PrimaryTextStyle(
+                                                      PrimaryTextStyle(
                                                         size: 12,
                                                         content:
-                                                            "Pesanan Selesai",
+                                                            "order_is_done".tr,
                                                         color: kGreyColor,
                                                         textAlign:
                                                             TextAlign.center,

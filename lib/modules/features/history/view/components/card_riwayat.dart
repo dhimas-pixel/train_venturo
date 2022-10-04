@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_list_by_iduser_model.dart';
+import 'package:get/get.dart';
+import 'package:train_venturo/modules/models/order_model/order_list_by_iduser_model.dart';
 
 import '../../../../../config/themes/color.dart';
 import '../../../../../constant/core/assets_const/assets_const.dart';
@@ -126,9 +127,9 @@ class CardRiwayat extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(50),
                                     color: Colors.white,
                                   ),
-                                  child: const Text(
-                                    "Beri Nilai",
-                                    style: TextStyle(
+                                  child: Text(
+                                    "give_rating".tr,
+                                    style: const TextStyle(
                                       color: kSecondaryColor,
                                     ),
                                   ),
@@ -155,9 +156,9 @@ class CardRiwayat extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             color: kSecondaryColor,
                           ),
-                          child: const Text(
-                            "Pesan lagi",
-                            style: TextStyle(
+                          child: Text(
+                            "order_again".tr,
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
@@ -181,23 +182,23 @@ class CardRiwayat extends StatelessWidget {
     if (menuHistory.status == 0) {
       icon = Icons.access_time;
       color = const Color.fromRGBO(255, 172, 1, 1);
-      teks = "Dalam Antrian";
+      teks = "in_queue".tr;
     } else if (menuHistory.status == 1) {
       icon = Icons.access_time;
       color = const Color.fromRGBO(255, 172, 1, 1);
-      teks = "Sedang Disiapkan";
+      teks = "order_prepared".tr;
     } else if (menuHistory.status == 2) {
       icon = Icons.check;
       color = const Color.fromRGBO(0, 156, 72, 1);
-      teks = "Bisa Diambil";
+      teks = "already_to_pick".tr;
     } else if (menuHistory.status == 3) {
       icon = Icons.check;
       color = const Color.fromRGBO(0, 156, 72, 1);
-      teks = "Sudah Diambil";
+      teks = "done".tr;
     } else {
       icon = Icons.close;
       color = const Color.fromRGBO(230, 33, 41, 1);
-      teks = "Dibatalkan";
+      teks = "canceled".tr;
     }
     return Row(
       children: [

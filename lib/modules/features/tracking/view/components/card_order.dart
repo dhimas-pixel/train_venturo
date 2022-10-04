@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../config/themes/color.dart';
 import '../../../../../shared/customs/primary_text_style.dart';
-import '../../../../../shared/customs/small_button.dart';
-import 'package:flutter_conditional_rendering/conditional.dart';
 
 class CardOrder extends StatelessWidget {
   final Widget image;

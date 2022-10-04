@@ -162,7 +162,7 @@ class DetailVoucherView extends GetView<VoucherController> {
                       ],
                     ),
                     child: PrimaryButton(
-                      text: "Pakai Voucher",
+                      text: "use_voucher".tr,
                       press: () {
                         OrderController.to.selectedVoucher =
                             controller.dataVoucher[Get.arguments];

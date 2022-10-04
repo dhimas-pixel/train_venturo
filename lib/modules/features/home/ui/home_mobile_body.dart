@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/modules/features/history/view/ui/history_view.dart';
-import 'package:train_venturo/modules/features/profile/ui/profile_view.dart';
 import 'package:badges/badges.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
 import '../../login/controllers/login_controller.dart';
 import '../../menu/controllers/menu_controller.dart';
 import '../../menu/view/ui/menu_view.dart';
+import '../../profile/view/ui/profile_view.dart';
 import '../components/icon_navbar_home.dart';
 
 class HomeMobileBody extends StatefulWidget {
@@ -23,9 +23,9 @@ class HomeMobileBody extends StatefulWidget {
 class _HomeMobileBodyState extends State<HomeMobileBody> {
   final loginController = Get.find<LoginController>();
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    MenuView(),
-    HistoryView(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const MenuView(),
+    const HistoryView(),
     ProfileView(),
   ];
 
@@ -61,24 +61,24 @@ class _HomeMobileBodyState extends State<HomeMobileBody> {
             backgroundColor: kBlackSecondaryColor, // <-- This works for fixed
             selectedItemColor: kWhiteColor,
             unselectedItemColor: kGreyColor,
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: IconHomeBar(
+                icon: const IconHomeBar(
                   icon: Icons.home_rounded,
                 ),
-                label: 'Beranda',
+                label: 'home'.tr,
               ),
               BottomNavigationBarItem(
-                icon: IconHomeBar(
+                icon: const IconHomeBar(
                   icon: Icons.fastfood_rounded,
                 ),
-                label: 'Pesanan',
+                label: 'order'.tr,
               ),
               BottomNavigationBarItem(
-                icon: IconHomeBar(
+                icon: const IconHomeBar(
                   icon: Icons.account_circle_rounded,
                 ),
-                label: 'Profil',
+                label: 'profil'.tr,
               ),
             ],
           ),

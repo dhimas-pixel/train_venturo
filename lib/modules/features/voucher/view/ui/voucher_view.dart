@@ -16,7 +16,7 @@ class VoucherView extends GetView<VoucherController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarPrimary(
-        name: "Pilih Voucher",
+        name: "choose_voucher".tr,
         back: () {
           Get.back();
         },
@@ -87,20 +87,19 @@ class VoucherView extends GetView<VoucherController> {
                       child: Column(
                         children: [
                           Row(
-                            children: const [
-                              Icon(
+                            children: [
+                              const Icon(
                                 Icons.check_circle_outline_rounded,
                                 color: kSecondaryColor,
                                 size: 12,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Text.rich(
                                 TextSpan(
-                                  text:
-                                      'Pengunaan voucher tidak dapat digabung dengan',
-                                  children: <InlineSpan>[
+                                  text: 'voucher_tac_up'.tr,
+                                  children: const <InlineSpan>[
                                     TextSpan(
                                       text:
                                           '\ndiscount employee reward program',
@@ -133,9 +132,9 @@ class VoucherView extends GetView<VoucherController> {
                                 color: kSecondaryColor,
                               ),
                               alignment: Alignment.center,
-                              child: const Text(
-                                "Oke",
-                                style: TextStyle(
+                              child: Text(
+                                "ok".tr,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,

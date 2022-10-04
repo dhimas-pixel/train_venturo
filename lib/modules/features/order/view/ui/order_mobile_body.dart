@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,10 +16,9 @@ import 'package:train_venturo/shared/customs/primary_button.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
 import '../../../../../shared/customs/appbar_primary.dart';
-import '../../../../models/menu_model.dart/menu_response_model.dart';
-import '../../../../models/order_model.dart/order_request_model.dart';
+import '../../../../models/menu_model/menu_response_model.dart';
+import '../../../../models/order_model/order_request_model.dart';
 import '../../../menu/view/components/com_helper.dart';
-import '../../../tracking/controllers/detail_pesanan_controller.dart';
 
 class OrderMobileBody extends GetView<OrderController> {
   const OrderMobileBody({Key? key}) : super(key: key);
@@ -31,7 +28,7 @@ class OrderMobileBody extends GetView<OrderController> {
     Get.put(VoucherController());
     return Scaffold(
       appBar: AppBarPrimary(
-        name: "Pesanan",
+        name: "order".tr,
         back: () {
           Get.back();
         },
@@ -207,8 +204,8 @@ class OrderMobileBody extends GetView<OrderController> {
                                 builder: (state) {
                                   return PrimaryTextStyle(
                                     size: 18,
-                                    content:
-                                        "Total Pesanan (${state.newDataCount} Menu) : ",
+                                    content: "total_order".tr +
+                                        "(${state.newDataCount} Menu) : ",
                                     fontWeight: FontWeight.w500,
                                   );
                                 },
@@ -243,7 +240,7 @@ class OrderMobileBody extends GetView<OrderController> {
                                   GestureDetector(
                                     onTap: () {
                                       Get.defaultDialog(
-                                        title: "Info Diskon",
+                                        title: "info_diskon".tr,
                                         titlePadding:
                                             const EdgeInsets.symmetric(
                                                 vertical: 24),
@@ -252,7 +249,7 @@ class OrderMobileBody extends GetView<OrderController> {
                                           fontSize: 22,
                                           fontWeight: FontWeight.w600,
                                         ),
-                                        textCancel: "Oke",
+                                        textCancel: "ok".tr,
                                         cancelTextColor: kSecondaryColor,
                                         buttonColor: kSecondaryColor,
                                         content: Container(
@@ -303,8 +300,8 @@ class OrderMobileBody extends GetView<OrderController> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Row(
-                                            children: const [
-                                              Padding(
+                                            children: [
+                                              const Padding(
                                                 padding:
                                                     EdgeInsets.only(right: 10),
                                                 child: Icon(
@@ -315,7 +312,7 @@ class OrderMobileBody extends GetView<OrderController> {
                                               ),
                                               PrimaryTextStyle(
                                                 size: 18,
-                                                content: "Diskon",
+                                                content: "discount".tr,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ],
@@ -346,15 +343,14 @@ class OrderMobileBody extends GetView<OrderController> {
                                         fontSize: 22,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                      textCancel: "Oke",
+                                      textCancel: "ok".tr,
                                       cancelTextColor: kSecondaryColor,
                                       buttonColor: kSecondaryColor,
-                                      content: const Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                      content: Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: PrimaryTextStyle(
                                             size: 16,
-                                            content:
-                                                "Anda tidak memiliki voucher"),
+                                            content: "empty_voucher".tr),
                                       ),
                                     );
                                   }
@@ -415,9 +411,9 @@ class OrderMobileBody extends GetView<OrderController> {
                                           ],
                                         ),
                                         fallbackBuilder: (context) =>
-                                            const PrimaryTextStyle(
+                                            PrimaryTextStyle(
                                           size: 14,
-                                          content: "Pilih Voucher",
+                                          content: "choose_voucher".tr,
                                         ),
                                       ),
                                     ],
@@ -439,8 +435,8 @@ class OrderMobileBody extends GetView<OrderController> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
-                                children: const [
-                                  Padding(
+                                children: [
+                                  const Padding(
                                     padding: EdgeInsets.only(right: 10),
                                     child: Icon(
                                       Icons.payments_outlined,
@@ -450,7 +446,7 @@ class OrderMobileBody extends GetView<OrderController> {
                                   ),
                                   PrimaryTextStyle(
                                     size: 18,
-                                    content: "Pembayaran",
+                                    content: "payment".tr,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ],
@@ -485,9 +481,9 @@ class OrderMobileBody extends GetView<OrderController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const PrimaryTextStyle(
+                                  PrimaryTextStyle(
                                     size: 12,
-                                    content: "Total Pembayaran",
+                                    content: "total_payment".tr,
                                     color: kGreyColor,
                                   ),
                                   GetBuilder<OrderController>(
@@ -508,7 +504,7 @@ class OrderMobileBody extends GetView<OrderController> {
                                 init: OrderController(),
                                 builder: (state) {
                                   return PrimaryButton(
-                                    text: "Pesan Sekarang",
+                                    text: "order_now".tr,
                                     press: () {
                                       showDialogIdentify(context, state);
                                     },
@@ -552,14 +548,14 @@ class OrderMobileBody extends GetView<OrderController> {
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: Column(children: [
-              const PrimaryTextStyle(
+              PrimaryTextStyle(
                 size: 22,
-                content: "Verifikasi Pesanan",
+                content: "verif_order".tr,
                 fontWeight: FontWeight.w600,
               ),
-              const PrimaryTextStyle(
+              PrimaryTextStyle(
                 size: 16,
-                content: "Masukkan kode PIN",
+                content: "insert_pin".tr,
                 color: kGreyColor,
               ),
               const SizedBox(
@@ -611,14 +607,14 @@ class OrderMobileBody extends GetView<OrderController> {
             padding: const EdgeInsets.all(15),
             child: Column(
               children: [
-                const PrimaryTextStyle(
+                PrimaryTextStyle(
                   size: 22,
-                  content: "Verifikasi Pesanan",
+                  content: "verif_order".tr,
                   fontWeight: FontWeight.w600,
                 ),
-                const PrimaryTextStyle(
+                PrimaryTextStyle(
                   size: 16,
-                  content: "Finger Print",
+                  content: "finger_print".tr,
                   color: kGreyColor,
                 ),
                 const SizedBox(
@@ -626,7 +622,6 @@ class OrderMobileBody extends GetView<OrderController> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    log("Finger Print");
                     await value.authenticateWithBiometrics(context);
                     if (value.isLoading.isFalse && value.idOfNewOrder != 0) {
                       showOrderSuccessDialog(value.idOfNewOrder);
@@ -644,22 +639,22 @@ class OrderMobileBody extends GetView<OrderController> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Row(
-                    children: const [
-                      Expanded(
+                    children: [
+                      const Expanded(
                         child: Divider(),
                         flex: 1,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Text(
-                          "Atau",
-                          style: TextStyle(
+                          "or".tr,
+                          style: const TextStyle(
                             color: kGreyColor,
                             fontSize: 14,
                           ),
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: Divider(),
                         flex: 1,
                       ),
@@ -677,9 +672,9 @@ class OrderMobileBody extends GetView<OrderController> {
                       showDialogVerifyWithPin(value);
                     });
                   },
-                  child: const PrimaryTextStyle(
+                  child: PrimaryTextStyle(
                     size: 16,
-                    content: "Verifikasi Menggunakan PIN",
+                    content: "verif_using_pin".tr,
                     fontWeight: FontWeight.w600,
                     color: kSecondaryColor,
                     textAlign: TextAlign.center,
@@ -710,9 +705,9 @@ class OrderMobileBody extends GetView<OrderController> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 16),
-            child: const Text(
-              "Pesanan Sedang Disiapkan",
-              style: TextStyle(
+            child: Text(
+              "order_prepared".tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 22,
                 color: Color.fromRGBO(30, 30, 30, 1),
@@ -722,9 +717,9 @@ class OrderMobileBody extends GetView<OrderController> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 8),
-            child: const Text(
-              "Kamu dapat melacak pesananmu di fitur Pesanan",
-              style: TextStyle(
+            child: Text(
+              "you_can_track".tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 16,
                 color: Color.fromRGBO(46, 46, 46, 0.5),
@@ -736,7 +731,6 @@ class OrderMobileBody extends GetView<OrderController> {
             margin: const EdgeInsets.only(top: 16, bottom: 8),
             child: ElevatedButton(
               onPressed: () {
-                Get.put(DetailPesananController(idOrder: id));
                 Get.to(
                   () => TrackingView(
                     id: id,
@@ -744,9 +738,9 @@ class OrderMobileBody extends GetView<OrderController> {
                   ),
                 );
               },
-              child: const Text(
-                "Oke",
-                style: TextStyle(
+              child: Text(
+                "ok".tr,
+                style: const TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                 ),

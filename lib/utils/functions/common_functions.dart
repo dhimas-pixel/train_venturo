@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_list_by_iduser_model.dart';
+import 'package:train_venturo/modules/models/order_model/order_list_by_iduser_model.dart';
 
 class CommonFunctions {
   // final formatCurrency = NumberFormat.decimalPattern();
