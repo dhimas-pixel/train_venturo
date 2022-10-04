@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:train_venturo/modules/models/diskon_model.dart/diskon_response_model.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_detail_response_model.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_history_response_model.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_list_by_iduser_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_detail_response_model.dart';
+import 'package:train_venturo/modules/models/order_model/order_history_response_model.dart';
+import 'package:train_venturo/modules/models/order_model/order_list_by_iduser_model.dart'
     as id_user;
-import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_response_model.dart';
+import 'package:train_venturo/modules/models/order_model/order_request_model.dart';
+import 'package:train_venturo/modules/models/order_model/order_response_model.dart';
 
 import '../../../../constant/core/api_const/base_url_api.dart';
 import '../../../../utils/functions/cache_manager.dart';
+import '../../../models/diskon_model/diskon_response_model.dart';
 
 class OrderService {
   Future<DiskonResModel?> getDiskonId() async {

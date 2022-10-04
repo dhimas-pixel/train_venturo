@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
@@ -7,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/detail_menu/controllers/detail_menu_controller.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
-import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+import 'package:train_venturo/modules/models/menu_model/menu_response_model.dart'
     as menu;
-import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_request_model.dart'
     as order;
 import 'package:train_venturo/shared/customs/appbar_primary.dart';
 import 'package:train_venturo/shared/customs/primary_button.dart';
@@ -145,9 +143,9 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                       child: SvgPicture.asset(
                                                           "${AssetsUrl.svgUrl}ic_harga.svg"),
                                                     ),
-                                                    const PrimaryTextStyle(
+                                                    PrimaryTextStyle(
                                                       size: 16,
-                                                      content: "Harga",
+                                                      content: "price".tr,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                     )
@@ -180,7 +178,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                 GestureDetector(
                                               onTap: () => bottomSheetPrimary(
                                                 context,
-                                                'Pilih Level',
+                                                'choose_level'.tr,
                                                 SizedBox(
                                                   height: 50,
                                                   child: ListView.builder(
@@ -234,7 +232,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                       ? controller.itemLevel
                                                                   .value ==
                                                               ""
-                                                          ? 'Pilih Level'
+                                                          ? 'choose_level'.tr
                                                           : controller
                                                               .itemLevel.value
                                                       : MenuController.to
@@ -276,7 +274,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                 GestureDetector(
                                               onTap: () => bottomSheetPrimary(
                                                 context,
-                                                'Pilih Toping',
+                                                'choose_topping'.tr,
                                                 SizedBox(
                                                   height: 50,
                                                   child: ListView.builder(
@@ -360,14 +358,17 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                                           i]
                                                                       .keterangan ??
                                                                   "",
-                                                              selected: true,
+                                                              // selected: controller
+                                                              //         .dataDetailMenu
+                                                              //         .topping![
+                                                              //             i]
+                                                              //         .isSelected ??
+                                                              //     false,
                                                             )
                                                           ],
                                                           onChange:
                                                               (allSelectedItems,
                                                                   selectedItem) {
-                                                            log(allSelectedItems
-                                                                .toString());
                                                             controller.checkOptionToping(
                                                                 int.parse(
                                                                     selectedItem
@@ -380,6 +381,11 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                             //         .dataDetailMenu
                                                             //         .topping![i]
                                                             //         .isSelected!;
+                                                            // log(controller
+                                                            //     .dataDetailMenu
+                                                            //     .topping![i]
+                                                            //     .isSelected
+                                                            //     .toString());
                                                           },
                                                         ),
                                                       );
@@ -395,7 +401,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                 () => CardDetailMenu(
                                                   svgUrl:
                                                       '${AssetsUrl.svgUrl}ic_toping.svg',
-                                                  name: 'Toping',
+                                                  name: 'topping'.tr,
                                                   content: MenuController.to
                                                           .getKetToping(controller
                                                                   .dataDetailMenu
@@ -404,7 +410,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                               0)
                                                           .value!
                                                           .isEmpty
-                                                      ? "Pilih Toping"
+                                                      ? "choose_topping".tr
                                                       : MenuController.to
                                                           .getKetToping(controller
                                                                   .dataDetailMenu
@@ -438,7 +444,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                           GestureDetector(
                                             onTap: () => bottomSheetPrimary(
                                               context,
-                                              'Buat Catatan',
+                                              'make_note'.tr,
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     bottom: 10),
@@ -474,11 +480,11 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                                 ),
                                               ),
                                             ),
-                                            child: const CardDetailMenu(
+                                            child: CardDetailMenu(
                                               svgUrl:
                                                   '${AssetsUrl.svgUrl}ic_catatan.svg',
-                                              name: 'Catatan',
-                                              content: 'Tambahkan catatan',
+                                              name: 'note'.tr,
+                                              content: 'add_note'.tr,
                                             ),
                                           ),
                                           //
@@ -494,7 +500,7 @@ class DetailMenuMobileBody extends GetView<DetailMenuController> {
                                         initState: (_) {},
                                         builder: (state) {
                                           return PrimaryButton(
-                                            text: "Tambahkan Ke Pesanan",
+                                            text: "add_to_cart".tr,
                                             press: () {
                                               if (state
                                                       .getCount(controller

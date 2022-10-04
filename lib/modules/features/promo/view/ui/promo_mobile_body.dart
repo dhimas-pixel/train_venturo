@@ -74,9 +74,9 @@ class PromoMobileBody extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const PrimaryTextStyle(
+                          PrimaryTextStyle(
                             size: 16,
-                            content: "Nama Promo",
+                            content: "promo_name".tr,
                             fontWeight: FontWeight.w600,
                           ),
                           Padding(
@@ -93,8 +93,8 @@ class PromoMobileBody extends StatelessWidget {
                             child: Divider(color: kGreyColor),
                           ),
                           Row(
-                            children: const [
-                              Padding(
+                            children: [
+                              const Padding(
                                 padding: EdgeInsets.only(right: 15),
                                 child: Icon(
                                   Icons.assignment_outlined,
@@ -104,7 +104,7 @@ class PromoMobileBody extends StatelessWidget {
                               ),
                               PrimaryTextStyle(
                                 size: 16,
-                                content: "Syarat dan Ketentuan",
+                                content: "terms_and_conditions".tr,
                                 fontWeight: FontWeight.w500,
                               ),
                             ],

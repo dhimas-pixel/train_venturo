@@ -121,7 +121,6 @@ class Topping {
     keterangan = json['keterangan'];
     type = json['type'];
     harga = json['harga'];
-    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {

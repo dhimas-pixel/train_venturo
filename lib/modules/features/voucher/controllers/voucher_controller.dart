@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/voucher/repository/voucher_service.dart';
 
-import '../../../models/voucher_model.dart/voucher_response_model.dart'
-    as voucher;
+import '../../../models/voucher_model/voucher_response_model.dart' as voucher;
 
 class VoucherController extends GetxController with StateMixin {
   static VoucherController get to => Get.find();

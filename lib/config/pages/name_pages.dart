@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/modules/features/detail_menu/view/ui/detail_menu_view.dart';
+import 'package:train_venturo/modules/features/login/controllers/login_controller.dart';
 import 'package:train_venturo/modules/features/login/view/ui/login_view.dart';
 import 'package:train_venturo/modules/features/order/controller/order_controller.dart';
 import 'package:train_venturo/modules/features/order/view/ui/order_view.dart';
@@ -17,6 +18,9 @@ appRoutes() => [
         page: () => const LoginView(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: const Duration(milliseconds: 500),
+        binding: BindingsBuilder(() {
+          Get.put(LoginController());
+        }),
       ),
       GetPage(
         name: AppRoutes.locationView,

@@ -13,9 +13,9 @@ import 'package:train_venturo/modules/features/promo/view/ui/promo_view.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 import 'package:train_venturo/shared/widgets/scroll_behaviour.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
-import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+import 'package:train_venturo/modules/models/menu_model/menu_response_model.dart'
     as menu;
-import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_request_model.dart'
     as order;
 
 import '../../../../../config/routes/name_routes.dart';
@@ -63,12 +63,12 @@ class MenuMobileBody extends GetView<MenuController> {
                                           "${AssetsUrl.svgUrl}ic_voucher.svg",
                                           width: 27,
                                         ),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: PrimaryTextStyle(
                                             size: 20,
-                                            content: "Promo yang Tersedia",
+                                            content: "available_promo".tr,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -197,24 +197,27 @@ class MenuMobileBody extends GetView<MenuController> {
                                           const EdgeInsets.symmetric(
                                               horizontal: 16),
                                       labelSpacing: 10,
-                                      tabs: const [
+                                      tabs: [
                                         Tab(
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.format_list_bulleted_rounded,
                                           ),
-                                          text: "Semua Menu",
+                                          text: "all_menu".tr,
                                         ),
                                         Tab(
-                                          icon: Icon(Icons.rice_bowl_rounded),
-                                          text: "Makanan",
+                                          icon: const Icon(
+                                              Icons.rice_bowl_rounded),
+                                          text: "food".tr,
                                         ),
                                         Tab(
-                                          icon: Icon(Icons.local_cafe_rounded),
-                                          text: "Minuman",
+                                          icon: const Icon(
+                                              Icons.local_cafe_rounded),
+                                          text: "beverage".tr,
                                         ),
                                         Tab(
-                                          icon: Icon(Icons.restaurant_rounded),
-                                          text: "Snack",
+                                          icon: const Icon(
+                                              Icons.restaurant_rounded),
+                                          text: "snack".tr,
                                         ),
                                       ],
                                     ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
-import 'package:train_venturo/modules/models/voucher_model.dart/voucher_response_model.dart';
+import 'package:train_venturo/modules/models/voucher_model/voucher_response_model.dart';
 
 class VoucherCard extends StatelessWidget {
   final Function onCheckFunction;

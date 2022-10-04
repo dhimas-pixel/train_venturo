@@ -5,12 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/modules/features/order/repository/order_service.dart';
 import 'package:train_venturo/modules/features/tracking/view/ui/tracking_view.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_history_response_model.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_list_by_iduser_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_history_response_model.dart';
+import 'package:train_venturo/modules/models/order_model/order_list_by_iduser_model.dart'
     as order;
 import 'package:train_venturo/shared/customs/primary_button.dart';
 
-import '../../../models/order_model.dart/order_response_model.dart';
+import '../../../models/order_model/order_response_model.dart';
 
 class HistoryController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -34,11 +34,11 @@ class HistoryController extends GetxController
   List<order.Order> listHistoryOrderData = [];
 
   var dropdownItems = [
-    "Semua Status",
-    "Selesai",
-    "Dibatalkan",
+    "all_status".tr,
+    "done".tr,
+    "canceled".tr,
   ];
-  var selectedDropdownItem = "Semua Status";
+  var selectedDropdownItem = "all_status".tr;
 
   // Date
   DateTimeRange? selectedDateRange;
@@ -172,10 +172,10 @@ class HistoryController extends GetxController
         context: Get.context!,
         builder: (builder) {
           return AlertDialog(
-            title: const Text("Pesan kembali menu ini?"),
+            title: Text("re_order_asking".tr),
             actions: [
               PrimaryButton(
-                text: "Oke",
+                text: "ok".tr,
                 press: () async {
                   OrderResModel? isSent = await orderService.reOrderAdd(order);
 

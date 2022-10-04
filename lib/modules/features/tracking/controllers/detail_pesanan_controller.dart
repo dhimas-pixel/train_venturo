@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:train_venturo/modules/features/order/repository/order_service.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_detail_response_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_detail_response_model.dart'
     as order;
 
 class DetailPesananController extends GetxController with StateMixin {
