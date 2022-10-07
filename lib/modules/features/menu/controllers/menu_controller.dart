@@ -2,15 +2,16 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:train_venturo/modules/features/menu/repository/menu_service.dart';
 import 'package:train_venturo/modules/features/menu/repository/promo_service.dart';
-import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_request_model.dart'
     as order;
-import 'package:train_venturo/modules/models/promo_model.dart/promo_response_model.dart'
+import 'package:train_venturo/modules/models/promo_model/promo_response_model.dart'
     as promo;
 
 import '../../../../config/routes/name_routes.dart';
-import '../../../models/menu_model.dart/menu_response_model.dart' as menu;
+import '../../../models/menu_model/menu_response_model.dart' as menu;
 
 class MenuController extends GetxController with StateMixin {
   PromoService promoService = PromoService();
@@ -43,6 +44,17 @@ class MenuController extends GetxController with StateMixin {
 
   final RxList<menu.Data> _dummyData = <menu.Data>[].obs;
   RxList<menu.Data> get dummyData => _dummyData;
+
+  var languageBox = Hive.box("selected_language");
+
+  Future<void> cekLanguage() async {
+    String? selectedLanguage = languageBox.get("country_id");
+    if (selectedLanguage == null) {
+      languageBox.put("country_id", Get.deviceLocale?.languageCode ?? "en");
+      return;
+    }
+    return;
+  }
 
   Future<void> getPromo() async {
     change(null, status: RxStatus.loading());
@@ -83,6 +95,7 @@ class MenuController extends GetxController with StateMixin {
     getPromo();
     getAllMenu();
     foundMenu.value = _dataAllMenu;
+    cekLanguage();
     super.onInit();
   }
 

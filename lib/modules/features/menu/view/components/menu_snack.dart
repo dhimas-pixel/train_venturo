@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:train_venturo/constant/core/assets_const/assets_const.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
 import 'package:train_venturo/shared/widgets/shimmer_effect.dart';
-import 'package:train_venturo/modules/models/menu_model.dart/menu_response_model.dart'
+import 'package:train_venturo/modules/models/menu_model/menu_response_model.dart'
     as menu;
-import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_request_model.dart'
     as order;
 
 import '../../../../../config/routes/name_routes.dart';

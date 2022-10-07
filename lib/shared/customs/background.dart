@@ -3,9 +3,11 @@ import 'package:train_venturo/constant/common/media_query.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
+  final double top;
   const Background({
     Key? key,
     required this.child,
+    required this.top,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class Background extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 100,
+            top: top,
             child: child,
           ),
         ],

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:train_venturo/modules/models/voucher_model.dart/voucher_response_model.dart';
+import 'package:train_venturo/modules/models/voucher_model/voucher_response_model.dart';
 
 import '../../../../constant/core/api_const/base_url_api.dart';
 import '../../../../utils/functions/cache_manager.dart';

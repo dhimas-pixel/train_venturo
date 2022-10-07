@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
 import 'package:train_venturo/config/themes/color.dart';
 import 'package:train_venturo/constant/common/media_query.dart';
 import 'package:train_venturo/shared/customs/appbar_primary.dart';
@@ -19,8 +20,11 @@ class PromoMobileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarPrimary(
+      appBar: AppBarPrimary(
         name: 'Promo',
+        back: () {
+          Get.back();
+        },
       ),
       body: SafeArea(
         child: Container(
@@ -70,9 +74,9 @@ class PromoMobileBody extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const PrimaryTextStyle(
+                          PrimaryTextStyle(
                             size: 16,
-                            content: "Nama Promo",
+                            content: "promo_name".tr,
                             fontWeight: FontWeight.w600,
                           ),
                           Padding(
@@ -89,8 +93,8 @@ class PromoMobileBody extends StatelessWidget {
                             child: Divider(color: kGreyColor),
                           ),
                           Row(
-                            children: const [
-                              Padding(
+                            children: [
+                              const Padding(
                                 padding: EdgeInsets.only(right: 15),
                                 child: Icon(
                                   Icons.assignment_outlined,
@@ -100,7 +104,7 @@ class PromoMobileBody extends StatelessWidget {
                               ),
                               PrimaryTextStyle(
                                 size: 16,
-                                content: "Syarat dan Ketentuan",
+                                content: "terms_and_conditions".tr,
                                 fontWeight: FontWeight.w500,
                               ),
                             ],

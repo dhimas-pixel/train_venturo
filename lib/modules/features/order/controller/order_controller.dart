@@ -5,19 +5,21 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:train_venturo/modules/features/menu/controllers/menu_controller.dart';
 import 'package:train_venturo/modules/features/order/repository/order_service.dart';
-import 'package:train_venturo/modules/models/diskon_model.dart/diskon_response_model.dart'
+import 'package:train_venturo/modules/models/diskon_model/diskon_response_model.dart'
     as diskon;
-import 'package:train_venturo/modules/models/order_model.dart/order_request_model.dart'
+import 'package:train_venturo/modules/models/order_model/order_request_model.dart'
     as order;
-import 'package:train_venturo/modules/models/voucher_model.dart/voucher_response_model.dart'
+import 'package:train_venturo/modules/models/voucher_model/voucher_response_model.dart'
     as voucher;
 import 'package:train_venturo/utils/functions/components_helper.dart';
 import '../../../../utils/functions/cache_manager.dart';
-import '../../../models/menu_model.dart/menu_response_model.dart' as menu;
+import '../../../models/hive/user_hive_model.dart';
+import '../../../models/menu_model/menu_response_model.dart' as menu;
 
 class OrderController extends GetxController {
   static OrderController get to => Get.find();
@@ -51,6 +53,8 @@ class OrderController extends GetxController {
   RxBool isLoading = false.obs;
   int idOfNewOrder = 0;
 
+  var userBox = Hive.box<User>('user');
+
   @override
   void onInit() {
     getMyDiskon();
@@ -63,20 +67,23 @@ class OrderController extends GetxController {
     super.dispose();
   }
 
-  // checkPin() async {
-  //   if (pinController.text == userBox.values.first.pin) {
-  //     // Get.back(closeOverlays: true);
-  //     Get.close(2);
-  //     isLoading = true.obs;
-  //     update();
-  //     await checkout();
-  //     isLoading = false.obs;
+  checkPin(BuildContext context) async {
+    if (pinController.text == userBox.values.first.pin) {
+      // Get.back(closeOverlays: true);
+      Get.close(1);
+      isLoading = true.obs;
+      loadData(context);
+      update();
+      await checkout();
 
-  //     update();
-  //   } else {
-  //     errorController.add(ErrorAnimationType.shake);
-  //   }
-  // }
+      isLoading = false.obs;
+      Get.back();
+      update();
+    } else {
+      pinController.clear();
+      errorController.add(ErrorAnimationType.shake);
+    }
+  }
 
   Future<void> authenticateWithBiometrics(BuildContext context) async {
     bool authenticated = false;

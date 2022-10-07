@@ -59,20 +59,12 @@ class DetailMenuController extends GetxController with StateMixin {
         .where((element) => element.idMenu == idMenu)
         .toList();
 
-    // getDataMenu[0].ketLevel = null;
-    // getDataMenu[0].level = 0;
-    // MenuController.to.getIdLevel(idMenu).value = 0;
-
-    // itemLevel.value = getData?.keterangan ?? "";
-    // idLevel.value = getDataMenu[0].level!;
-
     getDataMenu[0].level = getData?.idDetail ?? 0;
     getDataMenu[0].ketLevel = getData?.keterangan ?? "";
 
     log("Id level " + getDataMenu[0].level.toString());
     log("Keterangan level " + getDataMenu[0].ketLevel.toString());
     update();
-    // log("Keterangan " + getLevel[0].keterangan.toString());
   }
 
   void checkOptionToping(int index) {

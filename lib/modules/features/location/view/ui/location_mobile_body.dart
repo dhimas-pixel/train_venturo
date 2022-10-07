@@ -35,6 +35,7 @@ class _LocationMobileBodyState extends State<LocationMobileBody> {
     return SafeArea(
       child: Scaffold(
         body: Background(
+          top: 100,
           child: SizedBox(
             height: heightSized(context) / 1.6,
             child: Column(
@@ -73,11 +74,11 @@ class _LocationMobileBodyState extends State<LocationMobileBody> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(right: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
                             child: PrimaryTextStyle(
                               size: 22,
-                              content: "Mencari Lokasimu",
+                              content: "find_location".tr,
                               color: kGreyColor,
                             ),
                           ),

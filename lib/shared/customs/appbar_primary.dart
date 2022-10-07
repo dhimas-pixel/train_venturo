@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:train_venturo/shared/customs/primary_text_style.dart';
 
 import '../../../../../config/themes/color.dart';
 
 class AppBarPrimary extends StatelessWidget implements PreferredSizeWidget {
   final String name;
+  final VoidCallback back;
+  final bool showBack;
   const AppBarPrimary({
     Key? key,
     required this.name,
+    required this.back,
+    this.showBack = true,
   }) : super(key: key);
 
   @override
@@ -17,15 +20,15 @@ class AppBarPrimary extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        onPressed: () {
-          Get.back();
-        },
-        icon: const Icon(
-          Icons.arrow_back_ios_rounded,
-          color: kBlackSecondaryColor,
-        ),
-      ),
+      leading: showBack
+          ? IconButton(
+              onPressed: back,
+              icon: const Icon(
+                Icons.arrow_back_ios_rounded,
+                color: kBlackSecondaryColor,
+              ),
+            )
+          : const SizedBox.shrink(),
       title: PrimaryTextStyle(
         size: 20,
         content: name,
