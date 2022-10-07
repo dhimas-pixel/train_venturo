@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1037487280480",
+    "project_id": "train-venturo",
+    "storage_bucket": "train-venturo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037487280480:android:c4992fdea9d576f59d4e05",
+        "android_client_info": {
+          "package_name": "com.example.train_venturo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037487280480-o2kh0qvtophaf6asfdp1nkj2ngouhn85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.train_venturo",
+            "certificate_hash": "6ca2ff658d487b0203df1ad0efffa0ef739ddbba"
+          }
+        },
+        {
+          "client_id": "1037487280480-8j45shlrdvr0evbsdk6f4abk659b5js2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC97sGh4iLImNjpCDGcHH8C_s6LREAOdrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037487280480-8j45shlrdvr0evbsdk6f4abk659b5js2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

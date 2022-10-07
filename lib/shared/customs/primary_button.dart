@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:train_venturo/config/themes/color.dart';
 
+import '../../constant/core/assets_const/assets_const.dart';
+
 class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback press;
@@ -33,7 +35,7 @@ class PrimaryButton extends StatelessWidget {
             color: textColor,
             fontSize: fontSize,
             fontWeight: fontWeight,
-            fontFamily: 'Montserrat',
+            fontFamily: AssetsUrl.fontMont,
           ),
           side: const BorderSide(
             width: 1,
