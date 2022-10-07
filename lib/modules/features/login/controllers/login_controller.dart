@@ -1,7 +1,10 @@
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'package:train_venturo/config/routes/name_routes.dart';
 import 'package:train_venturo/modules/features/login/repository/login_service.dart';
 import 'package:train_venturo/modules/models/login_model/login_api_request_model.dart';
 import 'package:train_venturo/modules/models/login_model/login_google_request_model.dart';
@@ -19,10 +22,15 @@ class LoginController extends GetxController {
   var googleAccount = Rx<GoogleSignInAccount?>(null);
 
   var isObscure = true.obs;
-
   final isLogged = false.obs;
+  var isConnect = true.obs;
 
   var box = Hive.box<user_hive.User>('user');
+
+  RxBool isLoading = false.obs;
+
+  ConnectivityResult? connectivityResult;
+  late StreamSubscription _connectivitySubscription;
 
   Future<LoginResModel?> loginGoogle() async {
     try {
@@ -87,6 +95,40 @@ class LoginController extends GetxController {
     }
   }
 
+  Future<void> checkConnection() async {
+    // isLoading = true.obs;
+    // update();
+    // bool _isConnected = await SimpleConnectionChecker.isConnectedToInternet();
+
+    // switch (_isConnected) {
+    //   case true:
+    //     isLoading = false.obs;
+    //     update();
+
+    //     checkLoginStatus();
+    //     break;
+    //   case false:
+    //     isLoading = false.obs;
+    //     update();
+    //     Get.offAllNamed(AppRoutes.connectView);
+    //     break;
+    // }
+
+    _connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      connectivityResult = result;
+      if (result == ConnectivityResult.none) {
+        // checkLoginStatus();
+        Get.offAllNamed(AppRoutes.connectView);
+      } else {
+        // RestartWidget.restartApp();
+        checkLoginStatus();
+      }
+      update();
+    });
+  }
+
   Future<void> checkLoginStatus() async {
     final token = CacheManager.getToken();
     if (token != null) {
@@ -99,5 +141,17 @@ class LoginController extends GetxController {
     CacheManager.removeToken();
     googleAccount.value = await _googleSignin.signOut();
     await box.clear();
+  }
+
+  @override
+  void onInit() {
+    checkConnection();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _connectivitySubscription.cancel();
+    super.onClose();
   }
 }

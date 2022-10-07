@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:train_venturo/config/routes/name_routes.dart';
+import 'package:train_venturo/modules/features/connection/connection_view.dart';
 import 'package:train_venturo/modules/features/detail_menu/view/ui/detail_menu_view.dart';
 import 'package:train_venturo/modules/features/login/controllers/login_controller.dart';
 import 'package:train_venturo/modules/features/login/view/ui/login_view.dart';
@@ -17,6 +18,15 @@ appRoutes() => [
         name: AppRoutes.loginView,
         page: () => const LoginView(),
         transition: Transition.leftToRightWithFade,
+        transitionDuration: const Duration(milliseconds: 500),
+        binding: BindingsBuilder(() {
+          Get.put(LoginController());
+        }),
+      ),
+      GetPage(
+        name: AppRoutes.connectView,
+        page: () => const ConnectionView(),
+        transition: Transition.downToUp,
         transitionDuration: const Duration(milliseconds: 500),
         binding: BindingsBuilder(() {
           Get.put(LoginController());

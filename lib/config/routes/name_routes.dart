@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const String detailMenuView = '/detailMenu';
   static const String orderView = '/order';
   static const String voucherView = '/voucher';
+  static const String connectView = '/connect';
 }

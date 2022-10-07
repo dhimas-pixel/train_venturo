@@ -24,7 +24,7 @@ class LocationController extends GetxController with StateMixin {
     change(null, status: RxStatus.success());
 
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offAllNamed(AppRoutes.homeView);
+      Get.offNamed(AppRoutes.homeView);
     });
   }
 
